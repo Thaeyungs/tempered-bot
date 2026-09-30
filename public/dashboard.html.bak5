@@ -1,0 +1,3948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tempered | Dashboard</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --bg:#070707;
+    --panel:#0d0d0d;
+    --panel2:#111111;
+    --border:#292929;
+    --red:#a80000;
+    --red2:#d00000;
+    --gold:#d4af37;
+    --gold2:#f0cf62;
+    --green:#42d66b;
+    --text:#f5f5f5;
+    --muted:#777;
+}
+
+body{
+    min-height:100vh;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:245px;
+    min-height:100vh;
+    background:#0b0b0b;
+    border-right:1px solid #350000;
+    padding:24px 15px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    overflow-y:auto;
+}
+
+.brand{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.brand-icon{
+    width:56px;
+    height:56px;
+    margin:auto;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:var(--gold);
+    font-size:23px;
+    font-weight:bold;
+}
+
+.brand h2{
+    margin-top:10px;
+    font-size:18px;
+    letter-spacing:3px;
+}
+
+.brand p{
+    color:#666;
+    font-size:9px;
+    margin-top:5px;
+    letter-spacing:1px;
+}
+
+.menu-title{
+    color:#555;
+    font-size:9px;
+    letter-spacing:1.5px;
+    margin:20px 10px 8px;
+}
+
+.menu button{
+    width:100%;
+    padding:11px 12px;
+    margin-bottom:4px;
+    border:none;
+    border-radius:7px;
+    background:transparent;
+    color:#999;
+    text-align:left;
+    cursor:pointer;
+    font-size:13px;
+    transition:.15s;
+}
+
+.menu button:hover{
+    background:#180000;
+    color:white;
+}
+
+.menu button.active{
+    background:#250000;
+    color:white;
+    border-left:3px solid var(--red2);
+}
+
+.logout{
+    margin-top:25px;
+    width:100%;
+    padding:11px;
+    border:1px solid #4c0000;
+    border-radius:8px;
+    background:#120000;
+    color:#d88;
+    cursor:pointer;
+}
+
+/* CONTENT */
+
+.content{
+    flex:1;
+    margin-left:245px;
+    padding:32px;
+    overflow-y:auto;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.top h1{
+    font-size:28px;
+}
+
+.top p{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:5px;
+}
+
+.status{
+    padding:9px 15px;
+    border-radius:20px;
+    font-size:12px;
+    border:1px solid;
+}
+
+.status.online{
+    background:#08200d;
+    border-color:#1c6b2d;
+    color:var(--green);
+}
+
+.status.offline{
+    background:#211900;
+    border-color:#7a5d00;
+    color:var(--gold2);
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:24px;
+}
+
+.card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:20px;
+}
+
+.card-title{
+    color:#777;
+    font-size:10px;
+    letter-spacing:1px;
+    margin-bottom:12px;
+}
+
+.card-value{
+    font-size:24px;
+    font-weight:bold;
+    color:var(--gold);
+}
+
+.card-value.green{
+    color:var(--green);
+}
+
+.card-value.white{
+    color:white;
+}
+
+/* SECTIONS */
+
+.section{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:23px;
+    margin-bottom:18px;
+}
+
+.section h2{
+    font-size:17px;
+    margin-bottom:7px;
+}
+
+.section-description{
+    color:#777;
+    font-size:12px;
+    margin-bottom:18px;
+}
+
+/* BUTTONS */
+
+.action{
+    display:inline-block;
+    padding:10px 15px;
+    margin-right:7px;
+    margin-bottom:7px;
+    border:none;
+    border-radius:7px;
+    background:var(--red);
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.action:hover{
+    background:var(--red2);
+}
+
+.action.gold-button{
+    background:#8f721d;
+}
+
+.action.gold-button:hover{
+    background:#b18d28;
+}
+
+.action.gray{
+    background:#222;
+    color:#bbb;
+}
+
+.action.danger{
+    background:#410000;
+}
+
+/* LIST */
+
+.list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.list-item{
+    background:#111;
+    border:1px solid #252525;
+    border-radius:9px;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.list-item h3{
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.list-item p{
+    color:#777;
+    font-size:11px;
+}
+
+.item-actions{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+/* FORMS */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    color:#aaa;
+    font-size:11px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    background:#080808;
+    border:1px solid #303030;
+    border-radius:7px;
+    padding:11px;
+    color:white;
+    outline:none;
+    font-size:12px;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#7d0000;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+select option{
+    background:#111;
+}
+
+.checkbox{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#aaa;
+    font-size:12px;
+}
+
+.checkbox input{
+    width:auto;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(700px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    background:#101010;
+    border:1px solid #3c0000;
+    border-radius:14px;
+    padding:24px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:18px;
+}
+
+.close{
+    background:none;
+    border:none;
+    color:#777;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.close:hover{
+    color:white;
+}
+
+.modal-footer{
+    margin-top:20px;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+}
+
+th{
+    text-align:left;
+    color:var(--gold);
+    padding:12px;
+    border-bottom:1px solid #333;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #1d1d1d;
+    color:#aaa;
+}
+
+td strong{
+    color:white;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#111;
+    border:1px solid #333;
+    padding:13px 17px;
+    border-radius:9px;
+    color:white;
+    font-size:12px;
+    opacity:0;
+    transform:translateY(15px);
+    pointer-events:none;
+    transition:.25s;
+    z-index:3000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* EMPTY */
+
+.empty{
+    padding:30px;
+    text-align:center;
+    color:#555;
+    border:1px dashed #292929;
+    border-radius:9px;
+    font-size:12px;
+}
+
+/* PREVIEW */
+
+.preview{
+    background:#090909;
+    border:1px solid #292929;
+    border-radius:10px;
+    padding:18px;
+    margin-top:15px;
+}
+
+.preview-title{
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.preview-description{
+    color:#999;
+    font-size:12px;
+    white-space:pre-wrap;
+}
+
+.preview img{
+    max-width:100%;
+    max-height:220px;
+    border-radius:7px;
+    margin-top:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:800px){
+    .sidebar{
+        width:190px;
+    }
+
+    .content{
+        margin-left:190px;
+        padding:20px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+}
+
+@media(max-width:600px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        min-height:auto;
+    }
+
+    .content{
+        margin-left:0;
+    }
+
+    body{
+        display:block;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div id="loginScreen" style="
+    position:fixed;
+    inset:0;
+    background:#070707;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+">
+    <div style="
+        width:380px;
+        max-width:90%;
+        background:#0d0d0d;
+        border:1px solid #292929;
+        border-top:3px solid #a80000;
+        border-radius:14px;
+        padding:32px;
+        box-shadow:0 20px 60px rgba(0,0,0,.6);
+    ">
+        <div style="text-align:center;margin-bottom:28px;">
+            <div style="
+                width:58px;
+                height:58px;
+                margin:auto;
+                border:2px solid #d4af37;
+                border-radius:50%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:#d4af37;
+                font-weight:bold;
+                font-size:22px;
+            ">T</div>
+
+            <h1 style="
+                margin-top:14px;
+                font-size:21px;
+                letter-spacing:3px;
+            ">TEMPERED</h1>
+
+            <p style="
+                margin-top:6px;
+                color:#777;
+                font-size:11px;
+                letter-spacing:1px;
+            ">STAFF DASHBOARD</p>
+        </div>
+
+        <label style="
+            display:block;
+            color:#aaa;
+            font-size:11px;
+            margin-bottom:7px;
+        ">Contraseña</label>
+
+        <input
+            id="loginPassword"
+            type="password"
+            placeholder="Introduce la contraseña"
+            autocomplete="current-password"
+            style="margin-bottom:12px;"
+        >
+
+        <button
+            onclick="login()"
+            style="
+                width:100%;
+                padding:12px;
+                border:0;
+                border-radius:7px;
+                background:#a80000;
+                color:white;
+                font-weight:bold;
+                cursor:pointer;
+            "
+        >
+            ENTRAR
+        </button>
+
+        <div
+            id="loginError"
+            style="
+                display:none;
+                margin-top:12px;
+                color:#d88;
+                background:#210000;
+                border:1px solid #4c0000;
+                border-radius:7px;
+                padding:9px;
+                text-align:center;
+                font-size:11px;
+            "
+        ></div>
+    </div>
+</div>
+
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">T</div>
+        <h2>TEMPERED</h2>
+        <p>STAFF ADMINISTRATION</p>
+    </div>
+
+    <div class="menu">
+
+        <div class="menu-title">GENERAL</div>
+
+        <button class="nav active" data-page="dashboard">Dashboard</button>
+        <button class="nav" data-page="bot">Bot</button>
+        <button class="nav" data-page="menus">Menús</button>
+        <button class="nav" data-page="buttons">Botones</button>
+        <button class="nav" data-page="messages">Mensajes</button>
+        <button class="nav" data-page="questions">Preguntas</button>
+        <button class="nav" data-page="types">Tipos</button>
+
+        <div class="menu-title">CONFIGURACIÓN</div>
+
+        <button class="nav" data-page="server">Servidor</button>
+        <button class="nav" data-page="presentation">Presentación</button>
+        <button class="nav" data-page="settings">Configuración</button>
+
+        <div class="menu-title">STAFF</div>
+
+        <button class="nav" data-page="activity">Actividad</button>
+        <button class="nav" data-page="logs">Registros</button>
+
+        <form action="/logout" method="POST">
+            <button class="logout" type="submit">Cerrar sesión</button>
+        </form>
+
+    </div>
+</aside>
+
+
+<main class="content">
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+    <div class="top">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Centro de administración de Tempered</p>
+        </div>
+
+        <div id="globalStatus" class="status offline">
+            BOT OFFLINE
+        </div>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-title">ESTADO DEL BOT</div>
+            <div id="statBot" class="card-value">OFFLINE</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">SERVIDORES</div>
+            <div id="statServers" class="card-value">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">MENÚS</div>
+            <div id="statMenus" class="card-value">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">BOTONES</div>
+            <div id="statButtons" class="card-value">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">MENSAJES</div>
+            <div id="statMessages" class="card-value">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">PREGUNTAS</div>
+            <div id="statQuestions" class="card-value">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">TIPOS</div>
+            <div id="statTypes" class="card-value">0</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">PANEL</div>
+            <div class="card-value">STAFF</div>
+        </div>
+
+    </div>
+
+    <div class="section">
+        <h2>Control del bot</h2>
+        <p class="section-description">
+            Información general del bot y acceso rápido a sus funciones.
+        </p>
+
+        <button class="action" onclick="goTo('bot')">
+            Administrar bot
+        </button>
+
+        <button class="action gold-button" onclick="loadDashboard()">
+            Actualizar estado
+        </button>
+    </div>
+
+    <div class="section">
+        <h2>Configuración rápida</h2>
+        <p class="section-description">
+            Accede rápidamente a las herramientas principales.
+        </p>
+
+        <button class="action" onclick="goTo('menus')">
+            Administrar menús
+        </button>
+
+        <button class="action" onclick="goTo('buttons')">
+            Administrar botones
+        </button>
+
+        <button class="action" onclick="goTo('questions')">
+            Administrar preguntas
+        </button>
+
+        <button class="action" onclick="goTo('server')">
+            Seleccionar servidor
+        </button>
+    </div>
+
+</section>
+
+
+<!-- BOT -->
+
+<section id="bot" class="page">
+
+    <div class="top">
+        <div>
+            <h1>Bot</h1>
+            <p>Estado y configuración principal del bot</p>
+        </div>
+    </div>
+
+    <div class="section">
+
+        <h2>Estado actual</h2>
+
+        <div class="preview">
+            <div>
+                Estado:
+                <strong id="botPageStatus">Comprobando...</strong>
+            </div>
+
+            <br>
+
+            <div>
+                Servidores conectados:
+                <strong id="botServerCount">0</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div style="margin-top:18px;">
+            <button class="action gold-button" onclick="startBot()">
+                ENCENDER BOT
+            </button>
+
+            <button class="action danger" onclick="stopBot()">
+                APAGAR BOT
+            </button>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Configuración del bot</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Nombre del bot</label>
+                <input id="botName" placeholder="Nombre del bot">
+            </div>
+
+            <div class="form-group">
+                <label>Prefijo</label>
+                <input id="botPrefix" placeholder="Prefijo">
+            </div>
+
+            <div class="form-group full">
+                <label>Actividad</label>
+                <input id="botActivity" placeholder="Actividad que mostrará Discord">
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="action" onclick="saveBot()">
+            Guardar configuración
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- MENUS -->
+
+<section id="menus" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Menús</h1>
+            <p>Crea menús, submenús y publicaciones para Discord</p>
+        </div>
+
+        <button class="action" onclick="openMenuModal()">
+            Agregar menú
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Menús creados</h2>
+
+        <p class="section-description">
+            Los menús se crean completamente desde cero.
+        </p>
+
+        <div id="menusList" class="list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- BOTONES -->
+
+<section id="buttons" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Botones</h1>
+            <p>Configura los botones que aparecerán en tus menús</p>
+        </div>
+
+        <button class="action" onclick="openButtonModal()">
+            Agregar botón
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Botones creados</h2>
+
+        <div id="buttonsList" class="list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- MENSAJES -->
+
+<section id="messages" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Mensajes</h1>
+            <p>Crea respuestas y mensajes reutilizables</p>
+        </div>
+
+        <button class="action" onclick="openMessageModal()">
+            Agregar mensaje
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Mensajes configurados</h2>
+
+        <div id="messagesList" class="list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- PREGUNTAS -->
+
+<section id="questions" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Preguntas</h1>
+            <p>Configura las preguntas que el bot puede responder</p>
+        </div>
+
+        <button class="action" onclick="openQuestionModal()">
+            Agregar pregunta
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Sistema de preguntas</h2>
+
+        <p class="section-description">
+            El bot solo responderá utilizando preguntas y palabras relacionadas que tú configures.
+        </p>
+
+        <div class="preview">
+            <strong>Respuesta cuando una pregunta no está disponible:</strong>
+            <br><br>
+            <span style="color:#aaa;">
+                Esta pregunta no está disponible en el sistema.
+            </span>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Preguntas creadas</h2>
+
+        <div id="questionsList" class="list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- TIPOS -->
+
+<section id="types" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Tipos</h1>
+            <p>Crea los tipos que utilizarán botones y mensajes</p>
+        </div>
+
+        <button class="action" onclick="openTypeModal()">
+            Agregar tipo
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Tipos creados</h2>
+
+        <p class="section-description">
+            Los tipos son creados por ti. Puedes utilizarlos para conectar botones con mensajes.
+        </p>
+
+        <div id="typesList" class="list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- SERVIDOR -->
+
+<section id="server" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Servidor</h1>
+            <p>Selecciona dónde quieres publicar el contenido</p>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Seleccionar servidor</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Servidor</label>
+                <select id="serverSelect" onchange="loadChannels()">
+                    <option value="">Selecciona un servidor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Canal</label>
+                <select id="channelSelect">
+                    <option value="">Selecciona primero un servidor</option>
+                </select>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div id="serverInfo" class="preview">
+            Selecciona un servidor para ver su información.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRESENTACIÓN -->
+
+<section id="presentation" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Presentación</h1>
+            <p>Mensaje que utilizará el bot cuando sea mencionado</p>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Mensaje principal</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+                <label>Título</label>
+                <input id="presentationTitle">
+            </div>
+
+            <div class="form-group full">
+                <label>Descripción</label>
+                <textarea id="presentationDescription"></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>Imagen</label>
+                <input id="presentationImage" placeholder="URL de imagen">
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="action" onclick="savePresentation()">
+            Guardar presentación
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- CONFIGURACION -->
+
+<section id="settings" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Configuración</h1>
+            <p>Personaliza el dashboard</p>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Apariencia</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Nombre del dashboard</label>
+                <input id="settingName">
+            </div>
+
+            <div class="form-group">
+                <label>Color principal</label>
+                <input id="settingPrimary" placeholder="#a80000">
+            </div>
+
+            <div class="form-group">
+                <label>Color secundario</label>
+                <input id="settingSecondary" placeholder="#070707">
+            </div>
+
+            <div class="form-group">
+                <label>Color dorado</label>
+                <input id="settingAccent" placeholder="#d4af37">
+            </div>
+
+            <div class="form-group">
+                <label>Intervalo de actualización</label>
+                <input id="settingRefresh" type="number" min="5" placeholder="30">
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="action gold-button" onclick="saveAppearance()">
+            Guardar apariencia
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ACTIVIDAD -->
+
+<section id="activity" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Actividad</h1>
+            <p>Últimas acciones realizadas por el bot</p>
+        </div>
+
+        <button class="action" onclick="loadActivity()">
+            Actualizar
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <h2>Últimos 30 minutos</h2>
+
+        <div id="activityList" class="list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- LOGS -->
+
+<section id="logs" class="page">
+
+    <div class="top">
+
+        <div>
+            <h1>Registros</h1>
+            <p>Historial de interacciones y acciones</p>
+        </div>
+
+        <button class="action" onclick="loadLogs()">
+            Actualizar
+        </button>
+
+    </div>
+
+    <div class="section">
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Usuario</th>
+                        <th>Servidor</th>
+                        <th>Canal</th>
+                        <th>Acción</th>
+                        <th>Tipo</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+
+                <tbody id="logsTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- MENU MODAL -->
+
+<div id="menuModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2 id="menuModalTitle">Agregar menú</h2>
+            <button class="close" onclick="closeModal('menuModal')">×</button>
+        </div>
+
+        <input type="hidden" id="menuId">
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+                <label>Nombre interno</label>
+                <input id="menuName" placeholder="Ejemplo: informacion">
+            </div>
+
+            <div class="form-group full">
+                <label>Título</label>
+                <input id="menuTitle" placeholder="Título del menú">
+            </div>
+
+            <div class="form-group full">
+                <label>Descripción</label>
+                <textarea id="menuDescription" placeholder="Descripción del menú"></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>Imagen</label>
+                <input id="menuImage" placeholder="URL de imagen">
+            </div>
+
+            <div class="form-group full">
+                <label>Agregar menú al menú</label>
+                <select id="menuParent">
+                    <option value="">Menú principal</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="action gray" onclick="closeModal('menuModal')">
+                Cancelar
+            </button>
+
+            <button class="action" onclick="saveMenu()">
+                Guardar menú
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- BUTTON MODAL -->
+
+<div id="buttonModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2 id="buttonModalTitle">Agregar botón</h2>
+            <button class="close" onclick="closeModal('buttonModal')">×</button>
+        </div>
+
+        <input type="hidden" id="buttonId">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Nombre interno</label>
+                <input id="buttonName">
+            </div>
+
+            <div class="form-group">
+                <label>Texto del botón</label>
+                <input id="buttonLabel">
+            </div>
+
+            <div class="form-group">
+                <label>Emoji</label>
+                <input id="buttonEmoji" placeholder="Emoji del servidor">
+            </div>
+
+            <div class="form-group">
+                <label>Tipo</label>
+                <select id="buttonType">
+                    <option value="">Sin tipo</option>
+                </select>
+            </div>
+
+            <div class="form-group full">
+                <label>URL</label>
+                <input id="buttonUrl" placeholder="https://...">
+            </div>
+
+            <div class="form-group full">
+                <label>Menú donde aparecerá</label>
+                <select id="buttonMenu">
+                    <option value="">Sin menú</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Orden</label>
+                <input id="buttonOrder" type="number" value="0">
+            </div>
+
+            <div class="form-group">
+                <label>Estado</label>
+                <label class="checkbox">
+                    <input type="checkbox" id="buttonEnabled" checked>
+                    Botón activo
+                </label>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="action gray" onclick="closeModal('buttonModal')">
+                Cancelar
+            </button>
+
+            <button class="action" onclick="saveButton()">
+                Guardar botón
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MESSAGE MODAL -->
+
+<div id="messageModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2 id="messageModalTitle">Agregar mensaje</h2>
+            <button class="close" onclick="closeModal('messageModal')">×</button>
+        </div>
+
+        <input type="hidden" id="messageId">
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+                <label>Nombre interno</label>
+                <input id="messageName">
+            </div>
+
+            <div class="form-group full">
+                <label>Título</label>
+                <input id="messageTitle">
+            </div>
+
+            <div class="form-group full">
+                <label>Descripción</label>
+                <textarea id="messageDescription"></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>Imagen</label>
+                <input id="messageImage" placeholder="URL de imagen">
+            </div>
+
+            <div class="form-group full">
+                <label>Tipo</label>
+                <select id="messageType">
+                    <option value="">Sin tipo</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="action gray" onclick="closeModal('messageModal')">
+                Cancelar
+            </button>
+
+            <button class="action" onclick="saveMessage()">
+                Guardar mensaje
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- QUESTION MODAL -->
+
+<div id="questionModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2 id="questionModalTitle">Agregar pregunta</h2>
+            <button class="close" onclick="closeModal('questionModal')">×</button>
+        </div>
+
+        <input type="hidden" id="questionId">
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+                <label>Pregunta principal</label>
+                <input id="questionMain">
+            </div>
+
+            <div class="form-group full">
+                <label>Palabras relacionadas</label>
+                <input id="questionRelated" placeholder="separadas, por, comas">
+            </div>
+
+            <div class="form-group full">
+                <label>Respuesta</label>
+                <textarea id="questionAnswer"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo</label>
+                <select id="questionType">
+                    <option value="">Sin tipo</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Estado</label>
+                <label class="checkbox">
+                    <input type="checkbox" id="questionEnabled" checked>
+                    Pregunta activa
+                </label>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="action gray" onclick="closeModal('questionModal')">
+                Cancelar
+            </button>
+
+            <button class="action" onclick="saveQuestion()">
+                Guardar pregunta
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TYPE MODAL -->
+
+<div id="typeModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2 id="typeModalTitle">Agregar tipo</h2>
+            <button class="close" onclick="closeModal('typeModal')">×</button>
+        </div>
+
+        <input type="hidden" id="typeId">
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+                <label>Nombre del tipo</label>
+                <input id="typeName">
+            </div>
+
+            <div class="form-group full">
+                <label>Descripción</label>
+                <textarea id="typeDescription"></textarea>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="action gray" onclick="closeModal('typeModal')">
+                Cancelar
+            </button>
+
+            <button class="action" onclick="saveType()">
+                Guardar tipo
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PUBLISH MODAL -->
+
+<div id="publishModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Publicar menú</h2>
+
+            <button class="close" onclick="closeModal('publishModal')">
+                ×
+            </button>
+
+        </div>
+
+        <input type="hidden" id="publishMenuId">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Servidor</label>
+
+                <select id="publishServer" onchange="loadPublishChannels()">
+                    <option value="">Selecciona servidor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Canal</label>
+
+                <select id="publishChannel">
+                    <option value="">Selecciona canal</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button class="action gray" onclick="closeModal('publishModal')">
+                Cancelar
+            </button>
+
+            <button class="action gold-button" onclick="publishMenu()">
+                Publicar menú
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+let menus = [];
+let buttons = [];
+let messages = [];
+let questions = [];
+let types = [];
+let servers = [];
+
+const $ = id => document.getElementById(id);
+
+
+/* NAVIGATION */
+
+document.querySelectorAll(".nav").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const page = button.dataset.page;
+
+        goTo(page);
+
+    });
+
+});
+
+
+function goTo(page){
+
+    document.querySelectorAll(".nav").forEach(btn => {
+
+        btn.classList.toggle(
+            "active",
+            btn.dataset.page === page
+        );
+
+    });
+
+    document.querySelectorAll(".page").forEach(section => {
+
+        section.classList.toggle(
+            "active",
+            section.id === page
+        );
+
+    });
+
+    if(page === "dashboard") loadDashboard();
+    if(page === "menus") loadMenus();
+    if(page === "buttons") loadButtons();
+    if(page === "messages") loadMessages();
+    if(page === "questions") loadQuestions();
+    if(page === "types") loadTypes();
+    if(page === "server") loadServers();
+    if(page === "presentation") loadPresentation();
+    if(page === "settings") loadAppearance();
+    if(page === "activity") loadActivity();
+    if(page === "logs") loadLogs();
+
+}
+
+
+/* TOAST */
+
+function toast(message){
+
+    const element = $("toast");
+
+    element.textContent = message;
+
+    element.classList.add("show");
+
+    setTimeout(() => {
+        element.classList.remove("show");
+    },2500);
+
+}
+
+
+/* API */
+
+async function api(url, options = {}){
+
+    const response = await fetch(url,{
+
+        headers:{
+            "Content-Type":"application/json",
+            ...(options.headers || {})
+        },
+
+        ...options
+
+    });
+
+    if(!response.ok){
+
+        let message = "Error en la solicitud";
+
+        try{
+
+            const data = await response.json();
+
+            message = data.error || message;
+
+        }catch{}
+
+        throw new Error(message);
+
+    }
+
+    return response.json();
+
+}
+
+
+/* MODALS */
+
+function openModal(id){
+
+    $(id).classList.add("show");
+
+}
+
+function closeModal(id){
+
+    $(id).classList.remove("show");
+
+}
+
+window.addEventListener("click",event => {
+
+    if(event.target.classList.contains("modal")){
+
+        event.target.classList.remove("show");
+
+    }
+
+});
+
+
+/* DASHBOARD */
+
+async function loadDashboard(){
+
+    try{
+
+        const data = await api("/api/status");
+
+        const online = !!data.online;
+
+        $("statBot").textContent =
+            online ? "ONLINE" : "OFFLINE";
+
+        $("statBot").className =
+            "card-value " + (online ? "green" : "");
+
+        $("globalStatus").textContent =
+            online ? "BOT ONLINE" : "BOT OFFLINE";
+
+        $("globalStatus").className =
+            "status " + (online ? "online" : "offline");
+
+        $("statServers").textContent =
+            Array.isArray(data.servers) ?
+            data.servers.length :
+            0;
+
+    }catch{
+
+        $("statBot").textContent = "OFFLINE";
+        $("statBot").className = "card-value";
+
+        $("globalStatus").textContent = "BOT OFFLINE";
+        $("globalStatus").className = "status offline";
+
+    }
+
+    try{
+
+        const data = await api("/api/menus");
+        menus = Array.isArray(data) ? data : [];
+        $("statMenus").textContent = menus.length;
+
+    }catch{}
+
+    try{
+
+        const data = await api("/api/buttons");
+        buttons = Array.isArray(data) ? data : [];
+        $("statButtons").textContent = buttons.length;
+
+    }catch{}
+
+    try{
+
+        const data = await api("/api/messages");
+        messages = Array.isArray(data) ? data : [];
+        $("statMessages").textContent = messages.length;
+
+    }catch{}
+
+    try{
+
+        const data = await api("/api/questions");
+        questions = Array.isArray(data) ? data : [];
+        $("statQuestions").textContent = questions.length;
+
+    }catch{}
+
+    try{
+
+        const data = await api("/api/types");
+        types = Array.isArray(data) ? data : [];
+        $("statTypes").textContent = types.length;
+
+    }catch{}
+
+}
+
+
+/* BOT */
+
+async function loadBot(){
+
+    try{
+
+        const data = await api("/api/settings/bot");
+
+        $("botName").value = data.name || "";
+        $("botPrefix").value = data.prefix || "";
+        $("botActivity").value = data.activity || "";
+
+    }catch{}
+
+    try{
+
+        const data = await api("/api/status");
+
+        $("botPageStatus").textContent =
+            data.online ? "ONLINE" : "OFFLINE";
+
+        $("botPageStatus").style.color =
+            data.online ? "var(--green)" : "var(--gold)";
+
+        $("botServerCount").textContent =
+            Array.isArray(data.servers) ?
+            data.servers.length :
+            0;
+
+    }catch{}
+
+}
+
+
+async function refreshBotStatus(){
+
+    try{
+
+        const data = await api("/api/status");
+
+        const online = !!data.online;
+
+        $("botPageStatus").textContent =
+            online ? "ONLINE" : "OFFLINE";
+
+        $("botPageStatus").style.color =
+            online ? "var(--green)" : "var(--gold)";
+
+        $("botServerCount").textContent =
+            Array.isArray(data.servers) ?
+            data.servers.length :
+            0;
+
+        $("statBot").textContent =
+            online ? "ONLINE" : "OFFLINE";
+
+        $("statBot").className =
+            "card-value " + (online ? "green" : "");
+
+    }catch{}
+
+}
+
+
+async function startBot(){
+
+    try{
+
+        await api("/api/bot/start", {
+            method:"POST"
+        });
+
+        showToast("Bot encendido");
+
+        setTimeout(refreshBotStatus, 1500);
+
+    }catch(err){
+
+        showToast(err.message || "No se pudo encender el bot");
+
+    }
+
+}
+
+
+async function stopBot(){
+
+    try{
+
+        await api("/api/bot/stop", {
+            method:"POST"
+        });
+
+        showToast("Bot apagado");
+
+        await refreshBotStatus();
+
+    }catch(err){
+
+        showToast(err.message || "No se pudo apagar el bot");
+
+    }
+
+}
+
+
+async function saveBot(){
+
+    try{
+
+        await api("/api/settings/bot",{
+
+            method:"PUT",
+
+            body:JSON.stringify({
+
+                name:$("botName").value,
+                prefix:$("botPrefix").value,
+                activity:$("botActivity").value
+
+            })
+
+        });
+
+        toast("Configuración del bot guardada");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* MENUS */
+
+async function loadMenus(){
+
+    try{
+
+        const data = await api("/api/menus");
+
+        menus = Array.isArray(data) ? data : [];
+
+        renderMenus();
+
+        fillMenuSelectors();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function renderMenus(){
+
+    const container = $("menusList");
+
+    if(!menus.length){
+
+        container.innerHTML =
+            '<div class="empty">No hay menús creados todavía.</div>';
+
+        return;
+
+    }
+
+    container.innerHTML = menus.map(menu => {
+
+        const parent =
+            menus.find(x => String(x.id) === String(menu.parentId));
+
+        return `
+
+        <div class="list-item">
+
+            <div>
+
+                <h3>
+                    ${escapeHtml(menu.name || "Sin nombre")}
+                </h3>
+
+                <p>
+                    ${escapeHtml(menu.title || "Sin título")}
+                    ${parent ?
+                    " · Submenú de " + escapeHtml(parent.name)
+                    :
+                    " · Menú principal"}
+                </p>
+
+            </div>
+
+            <div class="item-actions">
+
+                <button class="action gray"
+                    onclick="editMenu('${menu.id}')">
+                    Editar
+                </button>
+
+                <button class="action gold-button"
+                    onclick="openPublishModal('${menu.id}')">
+                    Publicar menú
+                </button>
+
+                <button class="action danger"
+                    onclick="deleteMenu('${menu.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+function openMenuModal(id = null){
+
+    fillMenuSelectors();
+
+    $("menuId").value = "";
+
+    $("menuName").value = "";
+    $("menuTitle").value = "";
+    $("menuDescription").value = "";
+    $("menuImage").value = "";
+    $("menuParent").value = "";
+
+    $("menuModalTitle").textContent =
+        id ? "Editar menú" : "Agregar menú";
+
+    if(id){
+
+        const menu = menus.find(
+            x => String(x.id) === String(id)
+        );
+
+        if(!menu) return;
+
+        $("menuId").value = menu.id;
+        $("menuName").value = menu.name || "";
+        $("menuTitle").value = menu.title || "";
+        $("menuDescription").value = menu.description || "";
+        $("menuImage").value = menu.image || "";
+        $("menuParent").value = menu.parentId || "";
+
+    }
+
+    openModal("menuModal");
+
+}
+
+
+function fillMenuSelectors(){
+
+    const parent = $("menuParent");
+    const buttonMenu = $("buttonMenu");
+
+    if(parent){
+
+        const current = parent.value;
+
+        parent.innerHTML =
+            '<option value="">Menú principal</option>' +
+
+            menus.map(menu => `
+
+                <option value="${menu.id}">
+                    ${escapeHtml(menu.name || "Sin nombre")}
+                </option>
+
+            `).join("");
+
+        parent.value = current;
+
+    }
+
+    if(buttonMenu){
+
+        const current = buttonMenu.value;
+
+        buttonMenu.innerHTML =
+            '<option value="">Sin menú</option>' +
+
+            menus.map(menu => `
+
+                <option value="${menu.id}">
+                    ${escapeHtml(menu.name || "Sin nombre")}
+                </option>
+
+            `).join("");
+
+        buttonMenu.value = current;
+
+    }
+
+}
+
+
+async function saveMenu(){
+
+    const id = $("menuId").value;
+
+    const payload = {
+
+        name:$("menuName").value.trim(),
+        title:$("menuTitle").value.trim(),
+        description:$("menuDescription").value,
+        image:$("menuImage").value.trim(),
+        parentId:$("menuParent").value || null
+
+    };
+
+    if(!payload.name){
+
+        toast("Escribe un nombre para el menú");
+        return;
+
+    }
+
+    try{
+
+        await api(
+
+            id ?
+            `/api/menus/${id}` :
+            "/api/menus",
+
+            {
+
+                method:id ? "PUT" : "POST",
+
+                body:JSON.stringify(payload)
+
+            }
+
+        );
+
+        closeModal("menuModal");
+
+        toast(
+            id ?
+            "Menú actualizado" :
+            "Menú creado"
+        );
+
+        await loadMenus();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function editMenu(id){
+
+    openMenuModal(id);
+
+}
+
+
+async function deleteMenu(id){
+
+    if(!confirm("¿Eliminar este menú?")) return;
+
+    try{
+
+        await api(`/api/menus/${id}`,{
+            method:"DELETE"
+        });
+
+        toast("Menú eliminado");
+
+        loadMenus();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* PUBLISH */
+
+async function openPublishModal(id){
+
+    $("publishMenuId").value = id;
+
+    $("publishServer").innerHTML =
+        '<option value="">Selecciona servidor</option>';
+
+    $("publishChannel").innerHTML =
+        '<option value="">Selecciona canal</option>';
+
+    try{
+
+        const data =
+            await api("/api/discord/servers");
+
+        servers =
+            Array.isArray(data) ? data : [];
+
+        $("publishServer").innerHTML =
+            '<option value="">Selecciona servidor</option>' +
+
+            servers.map(server => `
+
+                <option value="${server.id}">
+                    ${escapeHtml(server.name)}
+                </option>
+
+            `).join("");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+    openModal("publishModal");
+
+}
+
+
+async function loadPublishChannels(){
+
+    const serverId = $("publishServer").value;
+
+    $("publishChannel").innerHTML =
+        '<option value="">Cargando...</option>';
+
+    if(!serverId){
+
+        $("publishChannel").innerHTML =
+            '<option value="">Selecciona canal</option>';
+
+        return;
+
+    }
+
+    try{
+
+        const channels =
+            await api(
+                `/api/discord/servers/${serverId}/channels`
+            );
+
+        $("publishChannel").innerHTML =
+            '<option value="">Selecciona canal</option>' +
+
+            channels.map(channel => `
+
+                <option value="${channel.id}">
+                    ${escapeHtml(channel.name)}
+                </option>
+
+            `).join("");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function publishMenu(){
+
+    const menuId = $("publishMenuId").value;
+    const serverId = $("publishServer").value;
+    const channelId = $("publishChannel").value;
+
+    if(!serverId || !channelId){
+
+        toast("Selecciona servidor y canal");
+        return;
+
+    }
+
+    try{
+
+        await api(
+            `/api/menus/${menuId}/publish`,
+            {
+
+                method:"POST",
+
+                body:JSON.stringify({
+
+                    serverId,
+                    channelId
+
+                })
+
+            }
+        );
+
+        closeModal("publishModal");
+
+        toast("Publicación enviada al bot");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* BUTTONS */
+
+async function loadButtons(){
+
+    try{
+
+        const data = await api("/api/buttons");
+
+        buttons = Array.isArray(data) ? data : [];
+
+        renderButtons();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function renderButtons(){
+
+    const container = $("buttonsList");
+
+    if(!buttons.length){
+
+        container.innerHTML =
+            '<div class="empty">No hay botones creados todavía.</div>';
+
+        return;
+
+    }
+
+    container.innerHTML = buttons.map(button => {
+
+        const menu =
+            menus.find(
+                x => String(x.id) === String(button.menuId)
+            );
+
+        const type =
+            types.find(
+                x => String(x.id) === String(button.typeId)
+            );
+
+        return `
+
+        <div class="list-item">
+
+            <div>
+
+                <h3>
+                    ${escapeHtml(button.emoji || "")}
+                    ${escapeHtml(button.label || button.name || "Botón")}
+                </h3>
+
+                <p>
+                    ${button.enabled === false ? "Desactivado" : "Activo"}
+                    ${menu ? " · " + escapeHtml(menu.name) : ""}
+                    ${type ? " · Tipo: " + escapeHtml(type.name) : ""}
+                </p>
+
+            </div>
+
+            <div class="item-actions">
+
+                <button class="action gray"
+                    onclick="editButton('${button.id}')">
+                    Editar
+                </button>
+
+                <button class="action"
+                    onclick="toggleButton('${button.id}')">
+                    ${button.enabled === false ? "Activar" : "Desactivar"}
+                </button>
+
+                <button class="action danger"
+                    onclick="deleteButton('${button.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+function openButtonModal(id = null){
+
+    fillTypeSelectors();
+    fillMenuSelectors();
+
+    $("buttonId").value = "";
+    $("buttonName").value = "";
+    $("buttonLabel").value = "";
+    $("buttonEmoji").value = "";
+    $("buttonType").value = "";
+    $("buttonUrl").value = "";
+    $("buttonMenu").value = "";
+    $("buttonOrder").value = "0";
+    $("buttonEnabled").checked = true;
+
+    $("buttonModalTitle").textContent =
+        id ? "Editar botón" : "Agregar botón";
+
+    if(id){
+
+        const button =
+            buttons.find(
+                x => String(x.id) === String(id)
+            );
+
+        if(!button) return;
+
+        $("buttonId").value = button.id;
+        $("buttonName").value = button.name || "";
+        $("buttonLabel").value = button.label || "";
+        $("buttonEmoji").value = button.emoji || "";
+        $("buttonType").value = button.typeId || "";
+        $("buttonUrl").value = button.url || "";
+        $("buttonMenu").value = button.menuId || "";
+        $("buttonOrder").value = button.order || 0;
+        $("buttonEnabled").checked =
+            button.enabled !== false;
+
+    }
+
+    openModal("buttonModal");
+
+}
+
+
+async function saveButton(){
+
+    const id = $("buttonId").value;
+
+    const payload = {
+
+        name:$("buttonName").value.trim(),
+        label:$("buttonLabel").value.trim(),
+        emoji:$("buttonEmoji").value.trim(),
+        typeId:$("buttonType").value || null,
+        url:$("buttonUrl").value.trim(),
+        menuId:$("buttonMenu").value || null,
+        order:Number($("buttonOrder").value || 0),
+        enabled:$("buttonEnabled").checked
+
+    };
+
+    if(!payload.name && !payload.label){
+
+        toast("Escribe un nombre o texto para el botón");
+        return;
+
+    }
+
+    try{
+
+        await api(
+
+            id ?
+            `/api/buttons/${id}` :
+            "/api/buttons",
+
+            {
+
+                method:id ? "PUT" : "POST",
+
+                body:JSON.stringify(payload)
+
+            }
+
+        );
+
+        closeModal("buttonModal");
+
+        toast(
+            id ?
+            "Botón actualizado" :
+            "Botón creado"
+        );
+
+        loadButtons();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function editButton(id){
+
+    openButtonModal(id);
+
+}
+
+
+async function toggleButton(id){
+
+    const button =
+        buttons.find(
+            x => String(x.id) === String(id)
+        );
+
+    if(!button) return;
+
+    try{
+
+        await api(`/api/buttons/${id}`,{
+
+            method:"PUT",
+
+            body:JSON.stringify({
+
+                ...button,
+                enabled:button.enabled === false
+
+            })
+
+        });
+
+        loadButtons();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function deleteButton(id){
+
+    if(!confirm("¿Eliminar este botón?")) return;
+
+    try{
+
+        await api(`/api/buttons/${id}`,{
+            method:"DELETE"
+        });
+
+        toast("Botón eliminado");
+
+        loadButtons();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* MESSAGES */
+
+async function loadMessages(){
+
+    try{
+
+        const data =
+            await api("/api/messages");
+
+        messages =
+            Array.isArray(data) ? data : [];
+
+        renderMessages();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function renderMessages(){
+
+    const container = $("messagesList");
+
+    if(!messages.length){
+
+        container.innerHTML =
+            '<div class="empty">No hay mensajes creados todavía.</div>';
+
+        return;
+
+    }
+
+    container.innerHTML = messages.map(message => {
+
+        const type =
+            types.find(
+                x => String(x.id) === String(message.typeId)
+            );
+
+        return `
+
+        <div class="list-item">
+
+            <div>
+
+                <h3>
+                    ${escapeHtml(
+                        message.name ||
+                        message.title ||
+                        "Mensaje"
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHtml(message.description || "")}
+                    ${type ?
+                    " · Tipo: " + escapeHtml(type.name)
+                    :
+                    ""}
+                </p>
+
+            </div>
+
+            <div class="item-actions">
+
+                <button class="action gray"
+                    onclick="editMessage('${message.id}')">
+                    Editar
+                </button>
+
+                <button class="action danger"
+                    onclick="deleteMessage('${message.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+function openMessageModal(id = null){
+
+    fillTypeSelectors();
+
+    $("messageId").value = "";
+    $("messageName").value = "";
+    $("messageTitle").value = "";
+    $("messageDescription").value = "";
+    $("messageImage").value = "";
+    $("messageType").value = "";
+
+    $("messageModalTitle").textContent =
+        id ? "Editar mensaje" : "Agregar mensaje";
+
+    if(id){
+
+        const message =
+            messages.find(
+                x => String(x.id) === String(id)
+            );
+
+        if(!message) return;
+
+        $("messageId").value = message.id;
+        $("messageName").value = message.name || "";
+        $("messageTitle").value = message.title || "";
+        $("messageDescription").value =
+            message.description || "";
+        $("messageImage").value =
+            message.image || "";
+        $("messageType").value =
+            message.typeId || "";
+
+    }
+
+    openModal("messageModal");
+
+}
+
+
+async function saveMessage(){
+
+    const id = $("messageId").value;
+
+    const payload = {
+
+        name:$("messageName").value.trim(),
+        title:$("messageTitle").value.trim(),
+        description:$("messageDescription").value,
+        image:$("messageImage").value.trim(),
+        typeId:$("messageType").value || null
+
+    };
+
+    if(!payload.name && !payload.title){
+
+        toast("Escribe un nombre o título");
+        return;
+
+    }
+
+    try{
+
+        await api(
+
+            id ?
+            `/api/messages/${id}` :
+            "/api/messages",
+
+            {
+
+                method:id ? "PUT" : "POST",
+
+                body:JSON.stringify(payload)
+
+            }
+
+        );
+
+        closeModal("messageModal");
+
+        toast(
+            id ?
+            "Mensaje actualizado" :
+            "Mensaje creado"
+        );
+
+        loadMessages();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function editMessage(id){
+
+    openMessageModal(id);
+
+}
+
+
+async function deleteMessage(id){
+
+    if(!confirm("¿Eliminar este mensaje?")) return;
+
+    try{
+
+        await api(`/api/messages/${id}`,{
+            method:"DELETE"
+        });
+
+        toast("Mensaje eliminado");
+
+        loadMessages();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* QUESTIONS */
+
+async function loadQuestions(){
+
+    try{
+
+        const data =
+            await api("/api/questions");
+
+        questions =
+            Array.isArray(data) ? data : [];
+
+        renderQuestions();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function renderQuestions(){
+
+    const container = $("questionsList");
+
+    if(!questions.length){
+
+        container.innerHTML =
+            '<div class="empty">No hay preguntas configuradas todavía.</div>';
+
+        return;
+
+    }
+
+    container.innerHTML = questions.map(question => {
+
+        const type =
+            types.find(
+                x => String(x.id) === String(question.typeId)
+            );
+
+        return `
+
+        <div class="list-item">
+
+            <div>
+
+                <h3>
+                    ${escapeHtml(
+                        question.question ||
+                        question.main ||
+                        "Pregunta"
+                    )}
+                </h3>
+
+                <p>
+                    ${question.enabled === false ?
+                    "Desactivada" :
+                    "Activa"}
+
+                    ${type ?
+                    " · Tipo: " + escapeHtml(type.name) :
+                    ""}
+                </p>
+
+            </div>
+
+            <div class="item-actions">
+
+                <button class="action gray"
+                    onclick="editQuestion('${question.id}')">
+                    Editar
+                </button>
+
+                <button class="action"
+                    onclick="toggleQuestion('${question.id}')">
+                    ${question.enabled === false ?
+                    "Activar" :
+                    "Desactivar"}
+                </button>
+
+                <button class="action danger"
+                    onclick="deleteQuestion('${question.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+function openQuestionModal(id = null){
+
+    fillTypeSelectors();
+
+    $("questionId").value = "";
+    $("questionMain").value = "";
+    $("questionRelated").value = "";
+    $("questionAnswer").value = "";
+    $("questionType").value = "";
+    $("questionEnabled").checked = true;
+
+    $("questionModalTitle").textContent =
+        id ? "Editar pregunta" : "Agregar pregunta";
+
+    if(id){
+
+        const question =
+            questions.find(
+                x => String(x.id) === String(id)
+            );
+
+        if(!question) return;
+
+        $("questionId").value = question.id;
+
+        $("questionMain").value =
+            question.question ||
+            question.main ||
+            "";
+
+        $("questionRelated").value =
+            Array.isArray(question.relatedWords) ?
+            question.relatedWords.join(", ") :
+            "";
+
+        $("questionAnswer").value =
+            question.answer || "";
+
+        $("questionType").value =
+            question.typeId || "";
+
+        $("questionEnabled").checked =
+            question.enabled !== false;
+
+    }
+
+    openModal("questionModal");
+
+}
+
+
+async function saveQuestion(){
+
+    const id = $("questionId").value;
+
+    const relatedWords =
+        $("questionRelated").value
+        .split(",")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    const payload = {
+
+        question:$("questionMain").value.trim(),
+
+        relatedWords,
+
+        answer:$("questionAnswer").value,
+
+        typeId:$("questionType").value || null,
+
+        enabled:$("questionEnabled").checked
+
+    };
+
+    if(!payload.question){
+
+        toast("Escribe la pregunta principal");
+        return;
+
+    }
+
+    if(!payload.answer){
+
+        toast("Escribe la respuesta");
+        return;
+
+    }
+
+    try{
+
+        await api(
+
+            id ?
+            `/api/questions/${id}` :
+            "/api/questions",
+
+            {
+
+                method:id ? "PUT" : "POST",
+
+                body:JSON.stringify(payload)
+
+            }
+
+        );
+
+        closeModal("questionModal");
+
+        toast(
+            id ?
+            "Pregunta actualizada" :
+            "Pregunta creada"
+        );
+
+        loadQuestions();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function editQuestion(id){
+
+    openQuestionModal(id);
+
+}
+
+
+async function toggleQuestion(id){
+
+    const question =
+        questions.find(
+            x => String(x.id) === String(id)
+        );
+
+    if(!question) return;
+
+    try{
+
+        await api(`/api/questions/${id}`,{
+
+            method:"PUT",
+
+            body:JSON.stringify({
+
+                ...question,
+
+                enabled:question.enabled === false
+
+            })
+
+        });
+
+        loadQuestions();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function deleteQuestion(id){
+
+    if(!confirm("¿Eliminar esta pregunta?")) return;
+
+    try{
+
+        await api(`/api/questions/${id}`,{
+            method:"DELETE"
+        });
+
+        toast("Pregunta eliminada");
+
+        loadQuestions();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* TYPES */
+
+async function loadTypes(){
+
+    try{
+
+        const data =
+            await api("/api/types");
+
+        types =
+            Array.isArray(data) ? data : [];
+
+        renderTypes();
+
+        fillTypeSelectors();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function renderTypes(){
+
+    const container = $("typesList");
+
+    if(!types.length){
+
+        container.innerHTML =
+            '<div class="empty">No hay tipos creados todavía.</div>';
+
+        return;
+
+    }
+
+    container.innerHTML = types.map(type => `
+
+        <div class="list-item">
+
+            <div>
+
+                <h3>
+                    ${escapeHtml(type.name || "Tipo")}
+                </h3>
+
+                <p>
+                    ${escapeHtml(
+                        type.description || "Sin descripción"
+                    )}
+                </p>
+
+            </div>
+
+            <div class="item-actions">
+
+                <button class="action gray"
+                    onclick="editType('${type.id}')">
+                    Editar
+                </button>
+
+                <button class="action danger"
+                    onclick="deleteType('${type.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+function fillTypeSelectors(){
+
+    const selectors = [
+
+        $("buttonType"),
+        $("messageType"),
+        $("questionType")
+
+    ];
+
+    selectors.forEach(select => {
+
+        if(!select) return;
+
+        const current = select.value;
+
+        select.innerHTML =
+            '<option value="">Sin tipo</option>' +
+
+            types.map(type => `
+
+                <option value="${type.id}">
+                    ${escapeHtml(type.name || "Sin nombre")}
+                </option>
+
+            `).join("");
+
+        select.value = current;
+
+    });
+
+}
+
+
+function openTypeModal(id = null){
+
+    $("typeId").value = "";
+    $("typeName").value = "";
+    $("typeDescription").value = "";
+
+    $("typeModalTitle").textContent =
+        id ? "Editar tipo" : "Agregar tipo";
+
+    if(id){
+
+        const type =
+            types.find(
+                x => String(x.id) === String(id)
+            );
+
+        if(!type) return;
+
+        $("typeId").value = type.id;
+        $("typeName").value = type.name || "";
+        $("typeDescription").value =
+            type.description || "";
+
+    }
+
+    openModal("typeModal");
+
+}
+
+
+async function saveType(){
+
+    const id = $("typeId").value;
+
+    const payload = {
+
+        name:$("typeName").value.trim(),
+
+        description:$("typeDescription").value
+
+    };
+
+    if(!payload.name){
+
+        toast("Escribe el nombre del tipo");
+        return;
+
+    }
+
+    try{
+
+        await api(
+
+            id ?
+            `/api/types/${id}` :
+            "/api/types",
+
+            {
+
+                method:id ? "PUT" : "POST",
+
+                body:JSON.stringify(payload)
+
+            }
+
+        );
+
+        closeModal("typeModal");
+
+        toast(
+            id ?
+            "Tipo actualizado" :
+            "Tipo creado"
+        );
+
+        loadTypes();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function editType(id){
+
+    openTypeModal(id);
+
+}
+
+
+async function deleteType(id){
+
+    if(!confirm("¿Eliminar este tipo?")) return;
+
+    try{
+
+        await api(`/api/types/${id}`,{
+            method:"DELETE"
+        });
+
+        toast("Tipo eliminado");
+
+        loadTypes();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* SERVERS */
+
+async function loadServers(){
+
+    try{
+
+        servers =
+            await api("/api/discord/servers");
+
+        if(!Array.isArray(servers))
+            servers = [];
+
+        $("serverSelect").innerHTML =
+            '<option value="">Selecciona un servidor</option>' +
+
+            servers.map(server => `
+
+                <option value="${server.id}">
+                    ${escapeHtml(server.name)}
+                </option>
+
+            `).join("");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function loadChannels(){
+
+    const serverId =
+        $("serverSelect").value;
+
+    $("channelSelect").innerHTML =
+        '<option value="">Cargando...</option>';
+
+    const server =
+        servers.find(
+            x => String(x.id) === String(serverId)
+        );
+
+    if(server){
+
+        $("serverInfo").innerHTML = `
+
+            <strong>${escapeHtml(server.name)}</strong>
+
+            <br><br>
+
+            ID:
+            <span style="color:#777">
+                ${escapeHtml(server.id)}
+            </span>
+
+            <br>
+
+            Canales disponibles:
+            <span style="color:var(--gold)">
+                ${(server.channels || []).length}
+            </span>
+
+        `;
+
+    }
+
+    if(!serverId){
+
+        $("channelSelect").innerHTML =
+            '<option value="">Selecciona primero un servidor</option>';
+
+        return;
+
+    }
+
+    try{
+
+        const channels =
+            await api(
+                `/api/discord/servers/${serverId}/channels`
+            );
+
+        $("channelSelect").innerHTML =
+            '<option value="">Selecciona canal</option>' +
+
+            channels.map(channel => `
+
+                <option value="${channel.id}">
+                    ${escapeHtml(channel.name)}
+                </option>
+
+            `).join("");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* PRESENTATION */
+
+async function loadPresentation(){
+
+    try{
+
+        const data =
+            await api("/api/settings/presentation");
+
+        $("presentationTitle").value =
+            data.title || "";
+
+        $("presentationDescription").value =
+            data.description || "";
+
+        $("presentationImage").value =
+            data.image || "";
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function savePresentation(){
+
+    try{
+
+        await api("/api/settings/presentation",{
+
+            method:"PUT",
+
+            body:JSON.stringify({
+
+                title:$("presentationTitle").value,
+
+                description:
+                    $("presentationDescription").value,
+
+                image:
+                    $("presentationImage").value
+
+            })
+
+        });
+
+        toast("Presentación guardada");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* APPEARANCE */
+
+async function loadAppearance(){
+
+    try{
+
+        const data =
+            await api("/api/settings/appearance");
+
+        $("settingName").value =
+            data.dashboardName || "";
+
+        $("settingPrimary").value =
+            data.primary || "";
+
+        $("settingSecondary").value =
+            data.secondary || "";
+
+        $("settingAccent").value =
+            data.accent || "";
+
+        $("settingRefresh").value =
+            data.refreshInterval || 30;
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function saveAppearance(){
+
+    try{
+
+        await api("/api/settings/appearance",{
+
+            method:"PUT",
+
+            body:JSON.stringify({
+
+                dashboardName:
+                    $("settingName").value,
+
+                primary:
+                    $("settingPrimary").value,
+
+                secondary:
+                    $("settingSecondary").value,
+
+                accent:
+                    $("settingAccent").value,
+
+                refreshInterval:
+                    Number(
+                        $("settingRefresh").value || 30
+                    )
+
+            })
+
+        });
+
+        toast("Apariencia guardada");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* ACTIVITY */
+
+async function loadActivity(){
+
+    try{
+
+        const data =
+            await api("/api/activity");
+
+        const list =
+            Array.isArray(data) ? data : [];
+
+        const container =
+            $("activityList");
+
+        if(!list.length){
+
+            container.innerHTML =
+                '<div class="empty">No hay actividad registrada en los últimos 30 minutos.</div>';
+
+            return;
+
+        }
+
+        container.innerHTML =
+            list.map(item => `
+
+                <div class="list-item">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHtml(
+                                item.action ||
+                                "Acción"
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(
+                                item.details ||
+                                item.message ||
+                                ""
+                            )}
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p>
+                            ${formatDate(item.timestamp)}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `).join("");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* LOGS */
+
+async function loadLogs(){
+
+    try{
+
+        const data =
+            await api("/api/logs");
+
+        const logs =
+            Array.isArray(data) ? data : [];
+
+        const table =
+            $("logsTable");
+
+        if(!logs.length){
+
+            table.innerHTML = `
+
+                <tr>
+                    <td colspan="7" style="text-align:center;color:#555">
+                        No hay registros todavía.
+                    </td>
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+        table.innerHTML =
+            logs.map(log => `
+
+                <tr>
+
+                    <td>
+                        ${formatDate(log.timestamp)}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(
+                                log.username ||
+                                log.user ||
+                                "Sistema"
+                            )}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            log.serverName ||
+                            log.server ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            log.channelName ||
+                            log.channel ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            log.action ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            log.type ||
+                            log.typeName ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            log.details ||
+                            log.response ||
+                            "-"
+                        )}
+                    </td>
+
+                </tr>
+
+            `).join("");
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* HELPERS */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function formatDate(value){
+
+    if(!value) return "-";
+
+    const date =
+        new Date(value);
+
+    if(Number.isNaN(date.getTime()))
+        return String(value);
+
+    return date.toLocaleString(
+        "es-DO",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+/* INITIAL LOAD */
+
+async function initialize(){
+
+    await loadDashboard();
+
+    await loadTypes();
+    await loadMenus();
+
+    setInterval(() => {
+
+        loadDashboard();
+
+    },30000);
+
+    setInterval(() => {
+
+        const current =
+            document.querySelector(".page.active");
+
+        if(!current) return;
+
+        if(current.id === "activity")
+            loadActivity();
+
+        if(current.id === "logs")
+            loadLogs();
+
+    },30000);
+
+}
+
+
+initialize();
+
+
+async function login(){
+    const password = $("loginPassword").value;
+    const error = $("loginError");
+
+    error.style.display = "none";
+
+    if(!password){
+        error.textContent = "Introduce la contraseña.";
+        error.style.display = "block";
+        return;
+    }
+
+    try{
+        const response = await fetch("/api/login", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok || !data.ok){
+            throw new Error(data.error || "Contraseña incorrecta.");
+        }
+
+        $("loginScreen").style.display = "none";
+
+        await loadDashboard();
+        await loadServers();
+
+    }catch(err){
+        error.textContent = err.message || "No se pudo iniciar sesión.";
+        error.style.display = "block";
+    }
+}
+
+async function checkSession(){
+    try{
+        const response = await fetch("/api/auth", {
+            credentials: "same-origin"
+        });
+
+        const data = await response.json();
+
+        if(data.authenticated){
+            $("loginScreen").style.display = "none";
+            await loadDashboard();
+        }else{
+            $("loginScreen").style.display = "flex";
+        }
+
+    }catch(err){
+        $("loginScreen").style.display = "flex";
+    }
+}
+
+$("loginPassword").addEventListener("keydown", event => {
+    if(event.key === "Enter"){
+        login();
+    }
+});
+
+checkSession();
+
+</script>
+
+</body>
+</html>

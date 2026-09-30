@@ -1,0 +1,26 @@
+{
+  "title": "TEMPERED | INFORMATION",
+  "description": "🇪🇸 Selecciona la información que deseas consultar.\n🇺🇸 Select the information you would like to view.",
+  "options": [
+    {
+      "id": "socials",
+      "label": "Redes Sociales | Social Media",
+      "emoji": "🌐"
+    },
+    {
+      "id": "support",
+      "label": "Soporte Técnico | Technical Support",
+      "emoji": "🛠️"
+    },
+    {
+      "id": "language",
+      "label": "Idioma | Language",
+      "emoji": "🌎"
+    },
+    {
+      "id": "questions",
+      "label": "Preguntas | Questions",
+      "emoji": "❔"
+    }
+  ]
+}

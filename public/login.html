@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tempered | Administración</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(circle at top, #3b0000 0%, #120000 35%, #050505 75%);
+      color: white;
+    }
+
+    .login-box {
+      width: 390px;
+      padding: 42px 35px;
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid #8f0000;
+      border-radius: 18px;
+      box-shadow:
+        0 0 35px rgba(150, 0, 0, 0.35),
+        0 0 2px #d4af37;
+      text-align: center;
+    }
+
+    .logo {
+      width: 75px;
+      height: 75px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      border: 2px solid #d4af37;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #d4af37;
+      font-size: 28px;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    h1 {
+      font-size: 25px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #999;
+      font-size: 13px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      color: #d4af37;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #333;
+      background: #111;
+      color: white;
+      outline: none;
+      margin-bottom: 18px;
+    }
+
+    input:focus {
+      border-color: #b00000;
+      box-shadow: 0 0 10px rgba(176, 0, 0, 0.25);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: linear-gradient(90deg, #8b0000, #c00000);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(190, 0, 0, 0.35);
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 11px;
+      color: #666;
+    }
+
+    .gold {
+      color: #d4af37;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <div class="logo">T</div>
+
+    <h1>TEMPERED</h1>
+
+    <p class="subtitle">
+      <span class="gold">STAFF</span> ADMINISTRATION PANEL
+    </p>
+
+    <form action="/login" method="POST">
+
+      <label for="password">CONTRASEÑA DE ADMINISTRADOR</label>
+
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Introduce la contraseña"
+        required
+      >
+
+      <button type="submit">
+        ACCEDER AL DASHBOARD
+      </button>
+
+    </form>
+
+    <div class="footer">
+      PRIVATE STAFF PANEL • TEMPERED
+    </div>
+
+  </div>
+
+</body>
+</html>

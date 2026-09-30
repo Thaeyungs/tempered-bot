@@ -1,0 +1,17 @@
+{
+  "presentation": {
+    "title": "⚔️ TEMPERED",
+    "description": "🎮 Un nuevo juego de combate en Roblox.\n🗡️ Prepárate para enfrentarte a otros jugadores, mejorar tus espadas y demostrar tu habilidad.\n\n✨ ¡La batalla comienza aquí!",
+    "image": ""
+  },
+  "bot": {
+    "enabled": true
+  },
+  "appearance": {
+    "dashboardName": "TEMPEREDD",
+    "primary": "",
+    "secondary": "",
+    "accent": "",
+    "refreshInterval": 30
+  }
+}
