@@ -490,7 +490,10 @@ async function sendInformationPanel() {
 
   const panel = buildInformationPanel();
 
-  await channel.send(panel);
+  console.log("INTENTANDO ENVIAR PANEL DE INFORMACIÓN...");
+  const messages = await channel.messages.fetch({ limit: 50 });
+  const existing = messages.find(m => m.author.id === client.user.id && m.embeds[0]?.description?.includes("Looking for help or information about Tempered?"));
+  if (existing) await existing.edit(panel); else await channel.send(panel);
 
   await sendBotSecurityLog(
     "📋 Panel de información enviado",
@@ -1405,6 +1408,23 @@ client.on(
           ephemeral: true
         });
 
+        return;
+      }
+
+      if (selected === "create_vc") {
+        const embed = createEmbed({
+          title: "🔊 CREATE VC",
+          description:
+            "**¿Quieres tus propios canales de voz?**\n" +
+            "<:PepeBoosterLogo:1554709714221142097> Boostea el servidor y obtén los permisos.\n\n" +
+            "**Want your own voice channels?**\n" +
+            "Boost the server to unlock the permissions!"
+        });
+
+        await interaction.reply({
+          embeds: [embed],
+          ephemeral: true
+        });
         return;
       }
 
