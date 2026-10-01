@@ -3,20 +3,7 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
-const {
-  Client,
-  GatewayIntentBits,
-  Events,
-  ActionRowBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-  PermissionFlagsBits,
-  AuditLogEvent,
-  SlashCommandBuilder
-} = require("discord.js");
+const { Client, GatewayIntentBits, Events, SlashCommandBuilder, PermissionFlagsBits, MessageFlags, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 const client = new Client({
   intents: [
@@ -288,28 +275,34 @@ function buildInformationPanel() {
     .setPlaceholder("⭔　﹒ꇙ꒒ꉔ　☓﹑　𓂃")
     .addOptions(
       new StringSelectMenuOptionBuilder()
-        .setLabel("Redes Sociales")
-        .setDescription("Obten las redes sociales del juego aqui!")
+        .setLabel("Redes Sociales / Social Media")
+        .setDescription("Redes de Tempered / Tempered social media.")
         .setValue("socials")
         .setEmoji("🌐"),
 
       new StringSelectMenuOptionBuilder()
-        .setLabel("Soporte Tecnico del juego")
-        .setDescription("Obten el servidor del soporte tecnico del juego.")
+        .setLabel("Soporte / Game Support")
+        .setDescription("Ayuda con el juego / Get game support.")
         .setValue("support")
         .setEmoji("🛠️"),
 
       new StringSelectMenuOptionBuilder()
-        .setLabel("Idioma de canales")
-        .setDescription("Cambia el idioma de los canales del servidor!")
+        .setLabel("Idioma / Language")
+        .setDescription("Cambia el idioma / Change language.")
         .setValue("language")
         .setEmoji("🌎"),
 
       new StringSelectMenuOptionBuilder()
-        .setLabel("Preguntas")
-        .setDescription("Aqui encontraras los canales para pedir ayuda o hacer preguntas sobre el juego.")
+        .setLabel("Preguntas / Questions")
+        .setDescription("Canales de ayuda / Help channels.")
         .setValue("questions")
-        .setEmoji("❔")
+        .setEmoji("❔"),
+
+      new StringSelectMenuOptionBuilder()
+        .setLabel("CREATE VC")
+        .setDescription("Permisos para crear VC / VC creation permissions.")
+        .setValue("create_vc")
+        .setEmoji("🔊")
     );
 
   const row = new ActionRowBuilder().addComponents(menu);
@@ -322,9 +315,9 @@ function buildInformationPanel() {
       "🇺🇸 **Looking for help or need information about Tempered?**\n" +
       "Welcome to the server's information center. Select an option from the menu below to find exactly what you're looking for."
   });
-
   return { embeds: [embed], components: [row] };
 }
+
 function createEmbed(data) {
   const embed = new EmbedBuilder();
 
@@ -488,25 +481,150 @@ async function sendInformationPanel() {
     throw new Error("No se pudo encontrar el canal de información.");
   }
 
+  console.log("CANAL PANEL:", channel.name, "| SERVIDOR:", channel.guild?.name, "| ID:", channel.id);
   const panel = buildInformationPanel();
 
   console.log("INTENTANDO ENVIAR PANEL DE INFORMACIÓN...");
+  console.log("1. CONSULTANDO MENSAJES...");
   const messages = await channel.messages.fetch({ limit: 50 });
-  const existing = messages.find(m => m.author.id === client.user.id && m.embeds[0]?.description?.includes("Looking for help or information about Tempered?"));
-  if (existing) await existing.edit(panel); else await channel.send(panel);
+  console.log("2. MENSAJES RECIBIDOS:", messages.size);
+  messages.forEach(m => console.log("MENSAJE:", m.id, "| TITULO:", m.embeds[0]?.title || "SIN EMBED", "| AUTOR:", m.author.tag));
+  await channel.send(panel);
+}
 
-  await sendBotSecurityLog(
-    "📋 Panel de información enviado",
-    `El bot envió el panel de información en <#${channel.id}>.`
+
+async function sendRulesPanel() {
+  const channel = await client.channels.fetch("1552384270641660034");
+
+  if (!channel || !channel.isTextBased()) {
+    throw new Error("No se pudo encontrar el canal de reglas.");
+  }
+
+  const embed = new EmbedBuilder()
+    .setColor(0x5C0000)
+    .setDescription(`<:SwordLogo:1554981011052302347> ・𝐑𝐔𝐋𝐄𝐒 𝐓𝐄𝐌𝐏𝐄𝐑𝐄𝐃
+
+Welcome to **Tempered**! To keep a comfortable, respectful and fun community for everyone, please keep the following rules in mind:
+
+𝟭. 𝗥𝗲𝘀𝗽𝗲𝗰𝘁 𝗼𝘁𝗵𝗲𝗿𝘀.
+─ Treat all members with respect. Insults, harassment, bullying, discrimination and personal attacks are not allowed.
+
+𝟮. 𝗗𝗼 𝗻𝗼𝘁 𝘀𝗽𝗮𝗺.
+─ Avoid sending repetitive messages, flooding the chats, making unnecessary mentions or intentionally bothering other users.
+
+𝟯. 𝗞𝗲𝗲𝗽 𝗰𝗼𝗻𝘁𝗲𝗻𝘁 𝗮𝗽𝗽𝗿𝗼𝗽𝗿𝗶𝗮𝘁𝗲.
+─ Do not share NSFW, sexual, extremely offensive or inappropriate content for the community.
+
+𝟰. 𝗗𝗼 𝗻𝗼𝘁 𝘀𝗰𝗮𝗺 𝗼𝘁𝗵𝗲𝗿 𝘂𝘀𝗲𝗿𝘀.
+─ Do not deceive other players in trades, exchanges or any other activity within the community.
+
+𝟱. 𝗗𝗼 𝗻𝗼𝘁 𝘂𝘀𝗲 𝗲𝘅𝗽𝗹𝗼𝗶𝘁𝘀 𝗼𝗿 𝗰𝗵𝗲𝗮𝘁𝘀.
+─ Do not share or use methods meant to gain unfair advantages within Tempered.
+
+𝟲. 𝗗𝗼 𝗻𝗼𝘁 𝗽𝗿𝗼𝗺𝗼𝘁𝗲 𝘄𝗶𝘁𝗵𝗼𝘂𝘁 𝗽𝗲𝗿𝗺𝗶𝘀𝘀𝗶𝗼𝗻.
+─ Do not promote other servers, games, social media, services or communities without authorization.
+
+𝟳. 𝗨𝘀𝗲 𝗲𝗮𝗰𝗵 𝗰𝗵𝗮𝗻𝗻𝗲𝗹 𝗰𝗼𝗿𝗿𝗲𝗰𝘁𝗹𝘆.
+─ Post content in the corresponding channel and respect the purpose of each space.
+
+𝟴. 𝗗𝗼 𝗻𝗼𝘁 𝘀𝗵𝗮𝗿𝗲 𝗽𝗲𝗿𝘀𝗼𝗻𝗮𝗹 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻.
+─ Protect your privacy and others'. Do not share passwords, personal data or private information.
+
+𝟵. 𝗔𝘃𝗼𝗶𝗱 𝘂𝗻𝗻𝗲𝗰𝗲𝘀𝘀𝗮𝗿𝘆 𝗰𝗼𝗻𝗳𝗹𝗶𝗰𝘁𝘀.
+─ Disagreements can happen, but try to resolve them with respect and without turning them into problems for the whole community.
+
+𝟭𝟬. 𝗥𝗲𝘀𝗽𝗲𝗰𝘁 𝗗𝗶𝘀𝗰𝗼𝗿𝗱 𝗮𝗻𝗱 𝗥𝗼𝗯𝗹𝗼𝘅 𝗿𝘂𝗹𝗲𝘀.
+─ By being part of Tempered, you must also respect the rules and terms of the platforms used.
+
+𝟭𝟭. 𝗗𝗼 𝗻𝗼𝘁 𝗶𝗺𝗽𝗲𝗿𝘀𝗼𝗻𝗮𝘁𝗲 𝗼𝘁𝗵𝗲𝗿𝘀.
+─ Do not try to impersonate other users, staff members, creators or official Tempered accounts.
+
+𝟭𝟮. 𝗘𝗻𝗷𝗼𝘆 𝘁𝗵𝗲 𝗰𝗼𝗺𝗺𝘂𝗻𝗶𝘁𝘆!
+─ Participate, meet new players and help keep Tempered a pleasant place for everyone.
+
+<:VCLogo:1554995581905010799> ・𝐑𝐔𝐋𝐄𝐒 𝐕𝐂
+
+𝟭. 𝗥𝗲𝘀𝗽𝗲𝗰𝘁 𝗼𝘁𝗵𝗲𝗿𝘀.
+─ Do not scream, insult, harass or intentionally bother other users inside the voice channels.
+
+𝟮. 𝗗𝗼 𝗻𝗼𝘁 𝗽𝗹𝗮𝘆 𝗶𝗻𝗮𝗽𝗽𝗿𝗼𝗽𝗿𝗶𝗮𝘁𝗲 𝗰𝗼𝗻𝘁𝗲𝗻𝘁.
+─ Do not use sounds, music, audios or inappropriate content to bother others.
+
+𝟯. 𝗗𝗼 𝗻𝗼𝘁 𝗶𝗻𝘁𝗲𝗿𝗿𝘂𝗽𝘁 𝗶𝗻𝘁𝗲𝗻𝘁𝗶𝗼𝗻𝗮𝗹𝗹𝘆.
+─ Avoid joining a VC to interrupt conversations, provoke arguments or bother other users.
+
+𝟰. 𝗔𝗽𝗽𝗿𝗼𝗽𝗿𝗶𝗮𝘁𝗲 𝗻𝗮𝗺𝗲𝘀.
+─ Do not create voice channels with inappropriate names. You could lose your VIP role in the server.
+
+𝟱. 𝗥𝗲𝘀𝗽𝗲𝗰𝘁 𝗽𝗿𝗶𝘃𝗮𝗰𝘆.
+─ Do not record or share other users' conversations without their consent.`)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+    .setFooter({ text: "Don't forget common sense!" });
+
+  const button = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId("translate_rules_es")
+      .setLabel("Traducir al español")
+      .setStyle(ButtonStyle.Secondary)
   );
 
-  addLog({
-    action: "information_panel_sent",
-    user: client.user?.tag || "Tempered",
-    server: channel.guild?.name,
-    channel: channel.name
-  });
+  await channel.send({ embeds: [embed], components: [button] });
 }
+
+const spanishRulesDescription = `<:SwordLogo:1554981011052302347> ・𝐑𝐄𝐆𝐋𝐀𝐒 𝐓𝐄𝐌𝐏𝐄𝐑𝐄𝐃
+¡Bienvenid@ a **Tempered**! Para mantener una comunidad cómoda, respetuosa y divertida para todos, ten en cuenta las siguientes reglas:
+
+𝟭. 𝗥𝗲𝘀𝗽𝗲𝘁𝗮 𝗮 𝗹𝗼𝘀 𝗱𝗲𝗺𝗮́𝘀.
+─ Trata a todos los miembros con respeto. No se permiten insultos, acoso, bullying, discriminación ni ataques personales.
+
+𝟮. 𝗡𝗼 𝗵𝗮𝗴𝗮𝘀 𝘀𝗽𝗮𝗺.
+─ Evita enviar mensajes repetitivos, saturar los chats, hacer menciones innecesarias o molestar intencionalmente a otros usuarios.
+
+𝟯. 𝗠𝗮𝗻𝘁𝗲́𝗻 𝗲𝗹 𝗰𝗼𝗻𝘁𝗲𝗻𝗶𝗱𝗼 𝗮𝗽𝗿𝗼𝗽𝗶𝗮𝗱𝗼.
+─ No compartas contenido NSFW, sexual, extremadamente ofensivo o inapropiado para la comunidad.
+
+𝟰. 𝗡𝗼 𝗲𝘀𝘁𝗮𝗳𝗲𝘀 𝗮 𝗼𝘁𝗿𝗼𝘀 𝘂𝘀𝘂𝗮𝗿𝗶𝗼𝘀.
+─ No engañes a otros jugadores en intercambios, trades o cualquier otra actividad dentro de la comunidad.
+
+𝟱. 𝗡𝗼 𝘂𝘁𝗶𝗹𝗶𝗰𝗲𝘀 𝗲𝘅𝗽𝗹𝗼𝗶𝘁𝘀 𝗻𝗶 𝘁𝗿𝗮𝗺𝗽𝗮𝘀.
+─ No compartas ni utilices métodos destinados a obtener ventajas injustas dentro de Tempered.
+
+𝟲. 𝗡𝗼 𝗽𝗿𝗼𝗺𝗼𝗰𝗶𝗼𝗻𝗲𝘀 𝘀𝗶𝗻 𝗽𝗲𝗿𝗺𝗶𝘀𝗼.
+─ No promociones otros servidores, juegos, redes sociales, servicios o comunidades sin autorización.
+
+𝟳. 𝗨𝘁𝗶𝗹𝗶𝘇𝗮 𝗰𝗮𝗱𝗮 𝗰𝗮𝗻𝗮𝗹 𝗰𝗼𝗿𝗿𝗲𝗰𝘁𝗮𝗺𝗲𝗻𝘁𝗲.
+─ Publica el contenido en el canal correspondiente y respeta la finalidad de cada espacio.
+
+𝟴. 𝗡𝗼 𝗰𝗼𝗺𝗽𝗮𝗿𝘁𝗮𝘀 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝗰𝗶𝗼́𝗻 𝗽𝗲𝗿𝘀𝗼𝗻𝗮𝗹.
+─ Protege tu privacidad y la de los demás. No compartas contraseñas, datos personales ni información privada.
+
+𝟵. 𝗘𝘃𝗶𝘁𝗮 𝗰𝗼𝗻𝗳𝗹𝗶𝗰𝘁𝗼𝘀 𝗶𝗻𝗻𝗲𝗰𝗲𝘀𝗮𝗿𝗶𝗼𝘀.
+─ Los desacuerdos pueden ocurrir, pero intenta resolverlos con respeto y sin convertirlos en problemas para toda la comunidad.
+
+𝟭𝟬. 𝗥𝗲𝘀𝗽𝗲𝘁𝗮 𝗹𝗮𝘀 𝗻𝗼𝗿𝗺𝗮𝘀 𝗱𝗲 𝗗𝗶𝘀𝗰𝗼𝗿𝗱 𝘆 𝗥𝗼𝗯𝗹𝗼𝘅.
+─ Al formar parte de Tempered, también debes respetar las normas y términos de las plataformas utilizadas.
+
+𝟭𝟭. 𝗡𝗼 𝘁𝗲 𝗵𝗮𝗴𝗮𝘀 𝗽𝗮𝘀𝗮𝗿 𝗽𝗼𝗿 𝗼𝘁𝗿𝗮 𝗽𝗲𝗿𝘀𝗼𝗻𝗮.
+─ No intentes suplantar a otros usuarios, miembros del staff, creadores o cuentas oficiales de Tempered.
+
+𝟭𝟮. ¡𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝗹𝗮 𝗰𝗼𝗺𝘂𝗻𝗶𝗱𝗮𝗱!
+─ Participa, conoce nuevos jugadores y ayuda a mantener Tempered como un lugar agradable para todos.
+
+<:VCLogo:1554995581905010799> ・𝐑𝐄𝐆𝐋𝐀𝐒 𝐕𝐂
+𝟭. 𝗥𝗲𝘀𝗽𝗲𝘁𝗮 𝗮 𝗹𝗼𝘀 𝗱𝗲𝗺𝗮́𝘀.
+─ No grites, insultes, acoses ni molestes intencionalmente a otros usuarios dentro de los canales de voz.
+
+𝟮. 𝗡𝗼 𝗿𝗲𝗽𝗿𝗼𝗱𝘂𝘇𝗰𝗮𝘀 𝗰𝗼𝗻𝘁𝗲𝗻𝗶𝗱𝗼 𝗶𝗻𝗮𝗽𝗿𝗼𝗽𝗶𝗮𝗱𝗼.
+─ No utilices sonidos, música, audios o contenido inapropiado para molestar a los demás.
+
+𝟯. 𝗡𝗼 𝗶𝗻𝘁𝗲𝗿𝗿𝘂𝗺𝗽𝗮𝘀 𝗶𝗻𝘁𝗲𝗻𝗰𝗶𝗼𝗻𝗮𝗹𝗺𝗲𝗻𝘁𝗲.
+─ Evita entrar a un VC para interrumpir conversaciones, provocar discusiones o molestar a otros usuarios.
+
+𝟰. 𝗡𝗼𝗺𝗯𝗿𝗲𝘀 𝗮𝗽𝗿𝗼𝗽𝗶𝗮𝗱𝗼𝘀.
+─ No crees canales de voz con nombres inapropiados. Podrías perder tu rol VIP en el servidor.
+
+𝟱. 𝗥𝗲𝘀𝗽𝗲𝘁𝗮 𝗹𝗮 𝗽𝗿𝗶𝘃𝗮𝗰𝗶𝗱𝗮𝗱.
+─ No grabes ni compartas conversaciones de otros usuarios sin su consentimiento.`;
 
 const logsCommand = new SlashCommandBuilder()
   .setName("logs")
@@ -518,105 +636,49 @@ const logsCommand = new SlashCommandBuilder()
   )
   .addSubcommand(subcommand =>
     subcommand
-      .setName("seguridad")
-      .setDescription("Establece este canal como Logs de Seguridad")
+      .setName("moderation")
+      .setDescription("Establece este canal como Logs de Moderación")
   );
 
 const kickCommand = new SlashCommandBuilder()
   .setName("kick")
-  .setDescription("Expulsa a un usuario del servidor")
-  .addUserOption(option =>
-    option.setName("usuario").setDescription("Usuario a expulsar").setRequired(true)
-  )
-  .addStringOption(option =>
-    option.setName("razon").setDescription("Razón de la expulsión").setRequired(false)
-  )
-  .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
-  .setDMPermission(false);
+  .setDescription("Expulsa a un miembro del servidor")
+  .addUserOption(option => option.setName("usuario").setDescription("El usuario a expulsar").setRequired(true));
 
 const banCommand = new SlashCommandBuilder()
   .setName("ban")
-  .setDescription("Banea a un usuario del servidor")
-  .addUserOption(option =>
-    option.setName("usuario").setDescription("Usuario a banear").setRequired(true)
-  )
-  .addStringOption(option =>
-    option.setName("razon").setDescription("Razón del baneo").setRequired(false)
-  )
-  .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
-  .setDMPermission(false);
+  .setDescription("Banea a un miembro del servidor")
+  .addUserOption(option => option.setName("usuario").setDescription("El usuario a banear").setRequired(true));
 
 const unbanCommand = new SlashCommandBuilder()
   .setName("unban")
-  .setDescription("Quita el baneo a un usuario")
-  .addStringOption(option =>
-    option.setName("usuario_id").setDescription("ID del usuario baneado").setRequired(true)
-  )
-  .addStringOption(option =>
-    option.setName("razon").setDescription("Razón del desbaneo").setRequired(false)
-  )
-  .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
-  .setDMPermission(false);
+  .setDescription("Desbanea a un usuario")
+  .addUserOption(option => option.setName("usuario").setDescription("El usuario a desbanear").setRequired(true));
 
 const muteCommand = new SlashCommandBuilder()
   .setName("mute")
-  .setDescription("Silencia temporalmente a un usuario")
-  .addUserOption(option =>
-    option.setName("usuario").setDescription("Usuario a silenciar").setRequired(true)
-  )
-  .addIntegerOption(option =>
-    option
-      .setName("duracion")
-      .setDescription("Duración en minutos")
-      .setRequired(true)
-      .setMinValue(1)
-      .setMaxValue(40320)
-  )
-  .addStringOption(option =>
-    option.setName("razon").setDescription("Razón del silencio").setRequired(false)
-  )
-  .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
-  .setDMPermission(false);
+  .setDescription("Silencia a un miembro temporalmente")
+  .addUserOption(option => option.setName("usuario").setDescription("El usuario a silenciar").setRequired(true));
 
 const unmuteCommand = new SlashCommandBuilder()
   .setName("unmute")
-  .setDescription("Quita el silencio temporal a un usuario")
-  .addUserOption(option =>
-    option.setName("usuario").setDescription("Usuario a desilenciar").setRequired(true)
-  )
-  .addStringOption(option =>
-    option.setName("razon").setDescription("Razón").setRequired(false)
-  )
-  .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
-  .setDMPermission(false);
+  .setDescription("Quita el silencio a un miembro")
+  .addUserOption(option => option.setName("usuario").setDescription("El usuario a desmutear").setRequired(true));
 
 const purgeCommand = new SlashCommandBuilder()
   .setName("purge")
-  .setDescription("Elimina varios mensajes de un canal")
-  .addIntegerOption(option =>
-    option
-      .setName("cantidad")
-      .setDescription("Cantidad de mensajes a eliminar")
-      .setRequired(true)
-      .setMinValue(1)
-      .setMaxValue(100)
-  )
-  .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
-  .setDMPermission(false);
-
-
-client.on(Events.GuildMemberAdd, async (member) => {
-  try {
-    await member.roles.add("1554367453587447880");
-  } catch (error) {
-    console.error("Error asignando rol automático:", error);
-  }
-});
+  .setDescription("Elimina mensajes en masa")
+  .addIntegerOption(option => option.setName("cantidad").setDescription("Número de mensajes a eliminar (1-100").setRequired(true));
 
 client.once(Events.ClientReady, async bot => {
 
-  await bot.application.commands.set([logsCommand, kickCommand, banCommand, unbanCommand, muteCommand, unmuteCommand, purgeCommand], "1552337088421306490");
+  const commands = [logsCommand, kickCommand, banCommand, unbanCommand, muteCommand, unmuteCommand, purgeCommand];
+
+  await bot.application.commands.set(commands, "1552337088421306490");
+  await bot.application.commands.set(commands, "1553176746990247986");
+  await bot.application.commands.set(commands, "1551622233921949709");
   console.log("SLASH COMMANDS REGISTRADOS: /logs /kick /ban /unban /mute /unmute /purge");
+
   console.log(
     `TEMPERED BOT ONLINE: ${bot.user.tag}`
   );
@@ -628,13 +690,24 @@ client.once(Events.ClientReady, async bot => {
 
   updateDiscordServers();
   processPublishQueue();
-  sendInformationPanel().catch(error => {
-    console.error("Error enviando el panel de información:", error);
-  });
 
-  sendLanguagePanel().catch(error => {
+  try {
+    await sendInformationPanel();
+  } catch (error) {
+    console.error("Error enviando el panel de información:", error);
+  }
+
+  try {
+    await sendLanguagePanel();
+  } catch (error) {
     console.error("Error enviando el panel de idioma:", error);
-  });
+  }
+
+  try {
+    await sendRulesPanel();
+  } catch (error) {
+    console.error("Error enviando el panel de reglas:", error);
+  }
 
   addActivity({
     action: "Bot conectado",
@@ -715,7 +788,7 @@ async function sendModerationDM({ user, action, moderator, reason, duration = nu
     const supportButton = new ButtonBuilder()
       .setLabel("💬 Servidor de soporte")
       .setStyle(ButtonStyle.Link)
-.setURL("https://discord.gg/5PTtaBeup");
+.setURL("https://discord.gg/ADyUwYZ3Wy");
     const row = new ActionRowBuilder()
       .addComponents(supportButton);
 
@@ -1284,6 +1357,20 @@ client.on(
     if (!interaction.isButton() && !interaction.isStringSelectMenu()) {
       return;
     }
+    if (interaction.isButton() && interaction.customId === "translate_rules_es") {
+      const embed = new EmbedBuilder()
+        .setColor(0x5C0000)
+        .setDescription(spanishRulesDescription)
+        .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1cf1")
+        .setFooter({ text: "¡No olvides el sentido común!" });
+
+      await interaction.reply({
+        embeds: [embed],
+        ephemeral: true
+      });
+      return;
+    }
+
     if (interaction.isButton() && (interaction.customId === "language_spanish" || interaction.customId === "language_english")) {
       const member = interaction.member;
       const spanishRole = "1554367419881885816";
@@ -1399,7 +1486,7 @@ client.on(
             .setLabel("Servidor de Soporte")
             .setEmoji("🛠️")
             .setStyle(ButtonStyle.Link)
-            .setURL("https://discord.gg/5PTtaBeup")
+            .setURL("https://discord.gg/ADyUwYZ3Wy")
         );
 
         await interaction.reply({
