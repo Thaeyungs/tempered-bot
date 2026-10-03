@@ -658,7 +658,23 @@ const unbanCommand = new SlashCommandBuilder()
 const muteCommand = new SlashCommandBuilder()
   .setName("mute")
   .setDescription("Silencia a un miembro temporalmente")
-  .addUserOption(option => option.setName("usuario").setDescription("El usuario a silenciar").setRequired(true));
+  .addUserOption(option =>
+    option.setName("usuario")
+      .setDescription("El usuario a silenciar")
+      .setRequired(true)
+  )
+  .addIntegerOption(option =>
+    option.setName("duracion")
+      .setDescription("Duración del mute en minutos")
+      .setRequired(true)
+      .setMinValue(1)
+      .setMaxValue(40320)
+  )
+  .addStringOption(option =>
+    option.setName("razon")
+      .setDescription("Razón del mute")
+      .setRequired(true)
+  );
 
 const unmuteCommand = new SlashCommandBuilder()
   .setName("unmute")
@@ -1016,6 +1032,8 @@ client.on(Events.InteractionCreate, async interaction => {
   const duration = interaction.options.getInteger("duracion");
   const reason = interaction.options.getString("razon") || "Sin razón especificada";
 
+  const MUTE_ROLE_ID = "1556022020834070708";
+
   if (!member) {
     await interaction.reply({
       content: "❌ Ese usuario no está en el servidor.",
@@ -1024,16 +1042,34 @@ client.on(Events.InteractionCreate, async interaction => {
     return;
   }
 
-  if (!member.moderatable) {
+  if (!member.manageable) {
     await interaction.reply({
-      content: "❌ No puedo silenciar a ese usuario. Revisa la jerarquía de roles.",
+      content: "❌ No puedo asignar el rol Mute a ese usuario. Revisa la jerarquía de roles.",
       ephemeral: true
     });
     return;
   }
 
   try {
-    await member.timeout(duration * 60 * 1000, reason);
+    const muteRole = interaction.guild.roles.cache.get(MUTE_ROLE_ID);
+
+    if (!muteRole) {
+      await interaction.reply({
+        content: "❌ No se encontró el rol Mute.",
+        ephemeral: true
+      });
+      return;
+    }
+
+    if (muteRole.position >= interaction.guild.members.me.roles.highest.position) {
+      await interaction.reply({
+        content: "❌ El rol Mute debe estar por debajo del rol más alto del bot.",
+        ephemeral: true
+      });
+      return;
+    }
+
+    await member.roles.add(muteRole, reason);
 
     const muteEmbed = new EmbedBuilder()
       .setTitle("🔇 Usuario silenciado")
@@ -1073,6 +1109,19 @@ client.on(Events.InteractionCreate, async interaction => {
       duration: `${duration} minutos`,
       reason
     });
+
+    setTimeout(async () => {
+      try {
+        const currentMember = await interaction.guild.members.fetch(user.id);
+
+        if (currentMember.roles.cache.has(MUTE_ROLE_ID)) {
+          await currentMember.roles.remove(MUTE_ROLE_ID, "Duración del mute finalizada");
+        }
+      } catch (error) {
+        console.error("Error retirando el rol Mute automáticamente:", error);
+      }
+    }, duration * 60 * 1000);
+
   } catch (error) {
     console.error("Error ejecutando /mute:", error);
 
@@ -1084,13 +1133,14 @@ client.on(Events.InteractionCreate, async interaction => {
     }
   }
 });
-
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand() || interaction.commandName !== "unmute") return;
 
   const member = interaction.options.getMember("usuario");
   const user = interaction.options.getUser("usuario");
   const reason = interaction.options.getString("razon") || "Sin razón especificada";
+
+  const MUTE_ROLE_ID = "1556022020834070708";
 
   if (!member) {
     await interaction.reply({
@@ -1101,7 +1151,25 @@ client.on(Events.InteractionCreate, async interaction => {
   }
 
   try {
-    await member.timeout(null, reason);
+    const muteRole = interaction.guild.roles.cache.get(MUTE_ROLE_ID);
+
+    if (!muteRole) {
+      await interaction.reply({
+        content: "❌ No se encontró el rol Mute.",
+        ephemeral: true
+      });
+      return;
+    }
+
+    if (!member.roles.cache.has(MUTE_ROLE_ID)) {
+      await interaction.reply({
+        content: "❌ Ese usuario no tiene el rol Mute.",
+        ephemeral: true
+      });
+      return;
+    }
+
+    await member.roles.remove(muteRole, reason);
 
     const unmuteEmbed = new EmbedBuilder()
       .setTitle("🔊 Usuario desilenciado")
@@ -1138,6 +1206,7 @@ client.on(Events.InteractionCreate, async interaction => {
       moderator: interaction.user.tag,
       reason
     });
+
   } catch (error) {
     console.error("Error ejecutando /unmute:", error);
 
@@ -1149,7 +1218,6 @@ client.on(Events.InteractionCreate, async interaction => {
     }
   }
 });
-
 client.on(Events.InteractionCreate, async interaction => {
   if (!interaction.isChatInputCommand() || interaction.commandName !== "purge") return;
 
@@ -1274,7 +1342,7 @@ client.on(Events.MessageCreate, async message => {
     return;
   }
 
-  if (message.mentions.has(client.user)) {
+if (message.mentions.has(client.user) && !message.mentions.everyone) {
     const presentation = buildTemperedPresentation();
 
     await message.reply(presentation);
