@@ -1422,19 +1422,49 @@ client.on(
       const selected = interaction.values[0];
 
       if (selected === "questions") {
+        const member = interaction.member;
+
+        const hasSpanish = member.roles.cache.has("1554367419881885816");
+        const hasEnglish = member.roles.cache.has("1554367390542856202");
+
+        let title;
+        let description;
+        let channelUrl;
+        let buttonLabel;
+
+        if (hasSpanish) {
+          title = "❔ Preguntas";
+          description =
+            "🇪🇸 **Aquí encontrarás el canal para pedir ayuda o hacer preguntas sobre el juego. Haz clic en este canal y realiza tu pregunta.**";
+          channelUrl =
+            "https://discord.com/channels/1552337088421306490/1554588187693817926";
+          buttonLabel = "Preguntas";
+        } else if (hasEnglish) {
+          title = "❔ Questions";
+          description =
+            "🇺🇸 **Here you will find the channel to ask for help or questions about the game. Click this channel and ask your question.**";
+          channelUrl =
+            "https://discord.com/channels/1552337088421306490/1552386908083191920";
+          buttonLabel = "Questions";
+        } else {
+          await interaction.reply({
+            content: "🌐 Selecciona primero tu idioma / Please select your language first.",
+            ephemeral: true
+          });
+          return;
+        }
+
         const embed = createEmbed({
-          title: "❔ Preguntas / Questions",
-          description:
-            "🇪🇸 **Aquí encontrarás el canal para pedir ayuda o hacer preguntas sobre el juego. Haz clic en este canal y realiza tu pregunta.**\n\n" +
-            "🇺🇸 **Here you will find the channel to ask for help or questions about the game. Click this channel and ask your question.**"
+          title,
+          description
         });
 
         const row = new ActionRowBuilder().addComponents(
           new ButtonBuilder()
-            .setLabel("Preguntas")
+            .setLabel(buttonLabel)
             .setEmoji("❔")
             .setStyle(ButtonStyle.Link)
-            .setURL("https://discord.com/channels/1552337088421306490/1552386908083191920")
+            .setURL(channelUrl)
         );
 
         await interaction.reply({
