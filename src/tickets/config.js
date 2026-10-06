@@ -17,7 +17,7 @@ module.exports = {
       closedCategoryId: "1556760202718744577",
       staffRoleIds: [
         "1556745635347308656",
-        "1556745510180626552"
+        "1556745701353066506"
       ]
     },
     user_report: {
