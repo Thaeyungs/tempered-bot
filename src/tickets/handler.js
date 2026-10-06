@@ -86,10 +86,18 @@ if (interaction.customId === "ticket_appeal_modal" || interaction.customId === "
         await interaction.deferReply({ ephemeral: true });
 const result = await createTicket(interaction, interaction.customId === "ticket_general_modal" ? "general" : interaction.customId === "ticket_user_report_modal" ? "user_report" : interaction.customId === "ticket_technical_support_modal" ? "technical_support" : interaction.customId === "ticket_bug_report_modal" ? "bug_report" : interaction.customId === "ticket_staff_application_modal" ? "staff_application" : "appeal");
 
+        if (result.limitReached) {
+          await interaction.editReply({
+            content: `${TICKET_EMOJI} **Este panel está lleno de tickets. Vuelve en otro momento cuando se despejen algunos tickets.**
+${TICKET_EMOJI} **This panel is currently full. Please come back later when some tickets become available.**`
+          });
+
+          return true;
+        }
+
         if (result.existing) {
-          await interaction.reply({
-            content: `${TICKET_EMOJI} **Ya tienes un ticket abierto / You already have an open ticket:** ${result.channel}`,
-            ephemeral: true
+          await interaction.editReply({
+            content: `${TICKET_EMOJI} **Ya tienes un ticket abierto / You already have an open ticket:** ${result.channel}`
           });
 
           return true;

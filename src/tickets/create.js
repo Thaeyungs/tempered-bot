@@ -27,6 +27,18 @@ async function createTicket(interaction, ticketType) {
     };
   }
 
+  const openTicketCount = guild.channels.cache.filter(
+    channel =>
+      channel.type === ChannelType.GuildText &&
+      channel.name.startsWith(`${ticketType}-`)
+  ).size;
+
+  if (openTicketCount >= ticketConfig.maxOpenTickets) {
+    return {
+      limitReached: true
+    };
+  }
+
   const ticketNumber = String(
     guild.channels.cache.filter(
       channel =>
