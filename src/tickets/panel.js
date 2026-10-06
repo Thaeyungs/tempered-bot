@@ -69,6 +69,47 @@ This channel is intended for **general questions, requests, and issues that do n
   };
 }
 
+function buildTechnicalSupportPanel() {
+  const embed = new EmbedBuilder()
+    .setColor(0x5C0000)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+    .setDescription(`# <:emoji_4:1555287462706937968> Soporte Técnico
+🇪🇸 **¿Estás teniendo un problema técnico específico con Tempered y necesitas asistencia?**
+En este canal puedes **crear un ticket para recibir ayuda con problemas técnicos relacionados directamente con tu experiencia en el juego**.
+
+Esta categoría está destinada a situaciones que requieren asistencia individual del Staff, como problemas para acceder a determinadas funciones, dificultades relacionadas con tu cuenta o progreso, problemas de configuración, errores que afectan específicamente a tu experiencia y otras situaciones técnicas que no correspondan a un reporte de bugs.
+
+Si encontraste un **bug o problema general del juego**, utiliza el canal correspondiente de **Bug Report** en lugar de esta categoría.
+
+Por favor, explica claramente el problema y proporciona toda la información necesaria para que nuestro equipo pueda ayudarte.
+
+# <:emoji_4:1555287462706937968> Technical Support
+🇺🇸 **Are you experiencing a specific technical issue with Tempered and need assistance?**
+In this channel, you can **create a ticket to receive help with technical issues directly affecting your experience in the game**.
+
+This category is intended for situations that require individual Staff assistance, such as issues accessing certain features, account or progression-related difficulties, configuration problems, errors specifically affecting your experience, and other technical situations that do not belong in a bug report.
+
+If you have found a **bug or general issue with the game**, please use the appropriate **Bug Report** channel instead of this category.
+
+Please clearly explain the issue and provide all necessary information so our team can assist you.`);
+
+  const button = new ButtonBuilder()
+    .setCustomId("ticket_create_technical_support")
+    .setLabel("Soporte Técnico / Technical Support")
+    .setEmoji({ name: "emoji_4", id: "1555287462706937968" })
+    .setStyle(ButtonStyle.Secondary);
+
+  return {
+    embeds: [embed],
+    components: [new ActionRowBuilder().addComponents(button)]
+  };
+}
+
+async function sendTechnicalSupportPanel(channel) {
+  const payload = buildTechnicalSupportPanel();
+  return channel.send(payload);
+}
+
 function buildUserReportPanel() {
   const embed = new EmbedBuilder()
     .setColor(0x5C0000)
@@ -114,8 +155,10 @@ module.exports = {
   buildAppealPanel,
   buildGeneralPanel,
   buildUserReportPanel,
+  buildTechnicalSupportPanel,
   sendAppealPanel,
   sendGeneralPanel,
   sendUserReportPanel,
+  sendTechnicalSupportPanel,
   panelChannelId: config.panelChannelId
 };

@@ -28,6 +28,15 @@ module.exports = {
         "1556745635347308656",
         "1556745510180626552"
       ]
+    },
+    technical_support: {
+      name: "Technical Support / Soporte Técnico",
+      channelCategoryId: "1556753791225954355",
+      closedCategoryId: "1556760202718744577",
+      staffRoleIds: [
+        "1556745635347308656",
+        "1556745510180626552"
+      ]
     }
   }
 };

@@ -77,14 +77,14 @@ async function handleTicketInteraction(interaction) {
       return true;
     }
 
-    if (interaction.customId === "ticket_appeal_modal" || interaction.customId === "ticket_general_modal" || interaction.customId === "ticket_user_report_modal") {
+if (interaction.customId === "ticket_appeal_modal" || interaction.customId === "ticket_general_modal" || interaction.customId === "ticket_user_report_modal" || interaction.customId === "ticket_technical_support_modal") {
       const answer = interaction.fields
         .getTextInputValue("appeal_reason")
         .trim();
 
       try {
         await interaction.deferReply({ ephemeral: true });
-        const result = await createTicket(interaction, interaction.customId === "ticket_general_modal" ? "general" : interaction.customId === "ticket_user_report_modal" ? "user_report" : "appeal");
+const result = await createTicket(interaction, interaction.customId === "ticket_general_modal" ? "general" : interaction.customId === "ticket_user_report_modal" ? "user_report" : interaction.customId === "ticket_technical_support_modal" ? "technical_support" : "appeal");
 
         if (result.existing) {
           await interaction.reply({
@@ -218,11 +218,30 @@ content: `${TICKET_EMOJI} **${interaction.customId === "ticket_general_modal" ? 
     return true;
   }
 
-  if (interaction.customId === "ticket_create_appeal" || interaction.customId === "ticket_create_general" || interaction.customId === "ticket_create_user_report") {
-const isGeneral = interaction.customId === "ticket_create_general";
-const isUserReport = interaction.customId === "ticket_create_user_report";    const modal = new ModalBuilder()
-      .setCustomId(isUserReport ? "ticket_user_report_modal" : isGeneral ? "ticket_general_modal" : "ticket_appeal_modal")
-      .setTitle(isUserReport ? "User Report / Reporte de Usuario" : isGeneral ? "General Support / Soporte General" : "Appeal / Desban");
+  if (interaction.customId === "ticket_create_appeal" || interaction.customId === "ticket_create_general" || interaction.customId === "ticket_create_user_report" || interaction.customId === "ticket_create_technical_support") {
+    const isGeneral = interaction.customId === "ticket_create_general";
+    const isUserReport = interaction.customId === "ticket_create_user_report";
+    const isTechnicalSupport = interaction.customId === "ticket_create_technical_support";
+
+    const modal = new ModalBuilder()
+      .setCustomId(
+        isTechnicalSupport
+          ? "ticket_technical_support_modal"
+          : isUserReport
+            ? "ticket_user_report_modal"
+            : isGeneral
+              ? "ticket_general_modal"
+              : "ticket_appeal_modal"
+      )
+      .setTitle(
+        isTechnicalSupport
+          ? "Technical Support / Soporte Técnico"
+          : isUserReport
+            ? "User Report / Reporte de Usuario"
+            : isGeneral
+              ? "General Support / Soporte General"
+              : "Appeal / Desban"
+      );
 
     const reasonInput = new TextInputBuilder()
       .setCustomId("appeal_reason")

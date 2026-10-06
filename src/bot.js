@@ -5,7 +5,7 @@ const path = require("path");
 
 const { Client, GatewayIntentBits, Events, SlashCommandBuilder, PermissionFlagsBits, MessageFlags, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const { handleTicketInteraction } = require("./tickets/handler");
-const { sendAppealPanel, sendGeneralPanel, sendUserReportPanel } = require("./tickets/panel");
+const { sendAppealPanel, sendGeneralPanel, sendUserReportPanel, sendTechnicalSupportPanel } = require("./tickets/panel");
 
 const client = new Client({
   intents: [
@@ -732,6 +732,13 @@ client.once(Events.ClientReady, async bot => {
     } catch (error) {
       console.error("Error enviando el panel de User Report:", error);
     }
+  try {
+    const technicalSupportChannel = await bot.channels.fetch("1556751528734236773");
+    await sendTechnicalSupportPanel(technicalSupportChannel);
+  } catch (error) {
+    console.error("Error enviando el panel de Technical Support:", error);
+  }
+
   } catch (error) {
     console.error("Error enviando el panel de información:", error);
   }
@@ -1449,7 +1456,7 @@ client.on(
       return;
     }
 
-    if ((interaction.isButton() && ["ticket_create_appeal", "ticket_create_general", "ticket_create_user_report", "ticket_close", "ticket_close_confirm", "ticket_close_cancel", "ticket_transcript", "ticket_reopen", "ticket_delete"].includes(interaction.customId)) || (interaction.isModalSubmit() && ["ticket_appeal_modal", "ticket_general_modal", "ticket_user_report_modal", "ticket_close_modal"].includes(interaction.customId))) {
+    if ((interaction.isButton() && ["ticket_create_appeal", "ticket_create_general", "ticket_create_user_report", "ticket_create_technical_support", "ticket_close", "ticket_close_confirm", "ticket_close_cancel", "ticket_transcript", "ticket_reopen", "ticket_delete"].includes(interaction.customId)) || (interaction.isModalSubmit() && ["ticket_appeal_modal", "ticket_general_modal", "ticket_user_report_modal", "ticket_technical_support_modal", "ticket_close_modal"].includes(interaction.customId))) {
       await handleTicketInteraction(interaction);
       return;
     }
