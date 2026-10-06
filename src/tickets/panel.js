@@ -7,6 +7,25 @@ const {
 
 const config = require("./config");
 
+async function syncPanel(channel, payload) {
+  if (!channel || !channel.isTextBased()) {
+    throw new Error("Canal de panel no válido.");
+  }
+
+  const botUserId = channel.guild?.members?.me?.id;
+  const messages = await channel.messages.fetch({ limit: 50 });
+
+  const botMessages = messages.filter(
+    message => botUserId && message.author.id === botUserId
+  );
+
+  for (const message of botMessages.values()) {
+    await message.delete().catch(() => {});
+  }
+
+  return channel.send(payload);
+}
+
 const APPEAL_GIF =
   "https://cdn.discordapp.com/attachments/1555082430740959367/1556744417837326428/20260930_232635259_1.gif?backend=b2&ex=6ac546b8&is=6ac3f538&hm=a411174fee99bcaf48c1c981a2bdf7f1835b5d0938dcf736b5a5f78935f4ffd6";
 
@@ -107,7 +126,7 @@ Reports will be reviewed by our team and, when necessary, forwarded to the appro
 
 async function sendBugReportPanel(channel) {
   const payload = buildBugReportPanel();
-  return channel.send(payload);
+  return syncPanel(channel, payload);
 }
 
 function buildTechnicalSupportPanel() {
@@ -148,7 +167,7 @@ Please clearly explain the issue and provide all necessary information so our te
 
 async function sendTechnicalSupportPanel(channel) {
   const payload = buildTechnicalSupportPanel();
-  return channel.send(payload);
+  return syncPanel(channel, payload);
 }
 
 function buildUserReportPanel() {
@@ -181,15 +200,15 @@ Please provide **clear and accurate information about the reported user**, expla
 
 async function sendUserReportPanel(channel) {
   const payload = buildUserReportPanel();
-  return channel.send(payload);
+  return syncPanel(channel, payload);
 }
 
 function sendAppealPanel(channel) {
-  return channel.send(buildAppealPanel());
+  return syncPanel(channel, buildAppealPanel());
 }
 
 async function sendGeneralPanel(channel) {
-  return channel.send(buildGeneralPanel());
+  return syncPanel(channel, buildGeneralPanel());
 }
 
 module.exports = {

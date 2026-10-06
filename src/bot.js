@@ -476,6 +476,24 @@ async function sendBotSecurityLog(title, description, color = 0xB8860B) {
   }
 }
 
+async function syncPanel(channel, payload) {
+  if (!channel || !channel.isTextBased()) {
+    throw new Error("Canal de panel no válido.");
+  }
+
+  const messages = await channel.messages.fetch({ limit: 50 });
+
+  const botMessages = messages.filter(
+    message => message.author.id === client.user.id
+  );
+
+  for (const message of botMessages.values()) {
+    await message.delete().catch(() => {});
+  }
+
+  return channel.send(payload);
+}
+
 async function sendInformationPanel() {
   const channel = await client.channels.fetch("1552384343207452823");
 
@@ -491,7 +509,7 @@ async function sendInformationPanel() {
   const messages = await channel.messages.fetch({ limit: 50 });
   console.log("2. MENSAJES RECIBIDOS:", messages.size);
   messages.forEach(m => console.log("MENSAJE:", m.id, "| TITULO:", m.embeds[0]?.title || "SIN EMBED", "| AUTOR:", m.author.tag));
-  await channel.send(panel);
+  await syncPanel(channel, panel);
 }
 
 
@@ -570,7 +588,7 @@ Welcome to **Tempered**! To keep a comfortable, respectful and fun community for
       .setStyle(ButtonStyle.Secondary)
   );
 
-  await channel.send({ embeds: [embed], components: [button] });
+  await syncPanel(channel, { embeds: [embed], components: [button] });
 }
 
 const spanishRulesDescription = `<:SwordLogo:1554981011052302347> ・𝐑𝐄𝐆𝐋𝐀𝐒 𝐓𝐄𝐌𝐏𝐄𝐑𝐄𝐃
@@ -714,33 +732,33 @@ client.once(Events.ClientReady, async bot => {
 
     try {
       const appealChannel = await bot.channels.fetch("1556747911415595088");
-      await sendAppealPanel(appealChannel);
+      console.log("SYNC APPEAL..."); await sendAppealPanel(appealChannel); console.log("SYNC APPEAL OK");
     } catch (error) {
       console.error("Error enviando el panel de Appeals:", error);
     }
 
     try {
       const generalChannel = await bot.channels.fetch("1556752283017154754");
-      await sendGeneralPanel(generalChannel);
+      console.log("SYNC GENERAL..."); await sendGeneralPanel(generalChannel); console.log("SYNC GENERAL OK");
     } catch (error) {
       console.error("Error enviando el panel de General Support:", error);
     }
 
     try {
       const userReportChannel = await bot.channels.fetch("1556750013558816920");
-      await sendUserReportPanel(userReportChannel);
+      console.log("SYNC USER REPORT..."); await sendUserReportPanel(userReportChannel); console.log("SYNC USER REPORT OK");
     } catch (error) {
       console.error("Error enviando el panel de User Report:", error);
     }
   try {
     const technicalSupportChannel = await bot.channels.fetch("1556751528734236773");
-    await sendTechnicalSupportPanel(technicalSupportChannel);
+    console.log("SYNC TECHNICAL..."); await sendTechnicalSupportPanel(technicalSupportChannel); console.log("SYNC TECHNICAL OK");
   } catch (error) {
     console.error("Error enviando el panel de Technical Support:", error);
   }
   try {
     const bugReportChannel = await bot.channels.fetch("1556749047342301204");
-    await sendBugReportPanel(bugReportChannel);
+    console.log("SYNC BUG REPORT..."); await sendBugReportPanel(bugReportChannel); console.log("SYNC BUG REPORT OK");
   } catch (error) {
     console.error("Error enviando el panel de Bug Report:", error);
   }
@@ -1450,7 +1468,7 @@ async function sendLanguagePanel() {
       .setStyle(ButtonStyle.Primary)
   );
 
-  await channel.send({
+  await syncPanel(channel, {
     embeds: [embed],
     components: [row]
   });
