@@ -4,6 +4,8 @@ const fs = require("fs");
 const path = require("path");
 
 const { Client, GatewayIntentBits, Events, SlashCommandBuilder, PermissionFlagsBits, MessageFlags, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { handleTicketInteraction } = require("./tickets/handler");
+const { sendAppealPanel } = require("./tickets/panel");
 
 const client = new Client({
   intents: [
@@ -709,6 +711,13 @@ client.once(Events.ClientReady, async bot => {
 
   try {
     await sendInformationPanel();
+
+    try {
+      const appealChannel = await bot.channels.fetch("1556747911415595088");
+      await sendAppealPanel(appealChannel);
+    } catch (error) {
+      console.error("Error enviando el panel de Appeals:", error);
+    }
   } catch (error) {
     console.error("Error enviando el panel de información:", error);
   }
@@ -1422,7 +1431,12 @@ async function sendLanguagePanel() {
 client.on(
   Events.InteractionCreate,
   async interaction => {
-    if (!interaction.isButton() && !interaction.isStringSelectMenu()) {
+    if (!interaction.isButton() && !interaction.isStringSelectMenu() && !interaction.isModalSubmit()) {
+      return;
+    }
+
+    if ((interaction.isButton() && ["ticket_create_appeal", "ticket_close", "ticket_close_confirm", "ticket_close_cancel", "ticket_transcript", "ticket_reopen", "ticket_delete"].includes(interaction.customId)) || (interaction.isModalSubmit() && ["ticket_appeal_modal", "ticket_close_modal"].includes(interaction.customId))) {
+      await handleTicketInteraction(interaction);
       return;
     }
     if (interaction.isButton() && interaction.customId === "translate_rules_es") {

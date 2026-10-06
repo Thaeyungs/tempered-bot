@@ -10,12 +10,14 @@ const discordTranscripts = require("discord-html-transcripts");
 
 const config = require("./config");
 
-const TICKET_EMOJI = "<a:emoji_6:1556779947744436244>";
+const TICKET_EMOJI = "<:SwordLogo:1554981011052302347>";
 
 async function closeTicket(interaction, ticketTitle) {
   const channel = interaction.channel;
 
   const ownerId = channel.topic?.replace("ticket-owner:", "");
+
+  await channel.setParent(config.tickets.appeal.closedCategoryId);
 
   await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
     ViewChannel: false

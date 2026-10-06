@@ -1709,5 +1709,433 @@
     "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
     "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
     "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munml3ad_ofy3q0",
+    "timestamp": "2026-09-30T04:48:57.829Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munml3q7_k4axp0",
+    "timestamp": "2026-09-30T04:48:58.399Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munmrmj3_64xp39",
+    "timestamp": "2026-09-30T04:54:02.703Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munmromh_6tddzt",
+    "timestamp": "2026-09-30T04:54:05.417Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munmupvl_m27w41",
+    "timestamp": "2026-09-30T04:56:27.009Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munmuqdt_sik48w",
+    "timestamp": "2026-09-30T04:56:27.665Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munnbrn4_ork10d",
+    "timestamp": "2026-09-30T05:09:42.448Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munnbs77_ax4sbh",
+    "timestamp": "2026-09-30T05:09:43.173Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munnditi_y5qqvi",
+    "timestamp": "2026-09-30T05:11:04.327Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munndj96_mwxc53",
+    "timestamp": "2026-09-30T05:11:04.890Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munnf8fe_39wlqo",
+    "timestamp": "2026-09-30T05:12:24.170Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munnf8wg_no7n8w",
+    "timestamp": "2026-09-30T05:12:24.784Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munnouoi_hzqce8",
+    "timestamp": "2026-09-30T05:19:52.914Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munnov7t_vw7xtq",
+    "timestamp": "2026-09-30T05:19:53.609Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munnqq7a_ha8pbw",
+    "timestamp": "2026-09-30T05:21:20.422Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munnqr10_ua4yw4",
+    "timestamp": "2026-09-30T05:21:21.492Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_munns1vd_ksbf65",
+    "timestamp": "2026-09-30T05:22:22.201Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_munns33k_1e7mh8",
+    "timestamp": "2026-09-30T05:22:23.792Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muno1055_2iq4wb",
+    "timestamp": "2026-09-30T05:29:19.865Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muno115j_xsnmyj",
+    "timestamp": "2026-09-30T05:29:21.175Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muoj9ekt_ojg78r",
+    "timestamp": "2026-09-30T20:03:39.917Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoj9fu1_iyick4",
+    "timestamp": "2026-09-30T20:03:41.545Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muojjzqk_zn2x8g",
+    "timestamp": "2026-09-30T20:11:53.900Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muojk1c6_2lcvsu",
+    "timestamp": "2026-09-30T20:11:55.974Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muokscl6_rgipsu",
+    "timestamp": "2026-09-30T20:46:23.418Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoksd4e_9u4it2",
+    "timestamp": "2026-09-30T20:46:24.110Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muosainn_1lp1dt",
+    "timestamp": "2026-10-01T00:16:28.403Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muosaj8e_hsc2tm",
+    "timestamp": "2026-10-01T00:16:29.151Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muosgra9_xpwf9g",
+    "timestamp": "2026-10-01T00:21:19.521Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muosgrzq_ctg8a3",
+    "timestamp": "2026-10-01T00:21:20.438Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muoskfot_tg7pi3",
+    "timestamp": "2026-10-01T00:24:11.117Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoskgeq_hl3koe",
+    "timestamp": "2026-10-01T00:24:12.050Z",
+    "action": "information_panel_sent",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "channel": "◟📚◝│𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡"
+  },
+  {
+    "id": "log_muot1d49_0p8scs",
+    "timestamp": "2026-10-01T00:37:20.937Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muot70pz_4yhf5t",
+    "timestamp": "2026-10-01T00:41:44.807Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muotcil6_rgmj7x",
+    "timestamp": "2026-10-01T00:46:01.242Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muotmxca_70p6hc",
+    "timestamp": "2026-10-01T00:54:06.922Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoucvld_iq5hvo",
+    "timestamp": "2026-10-01T01:14:17.713Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoyd9si_r1f7uv",
+    "timestamp": "2026-10-01T03:06:34.578Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoyvklv_1lk7cw",
+    "timestamp": "2026-10-01T03:20:48.403Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoyx8wa_2aqovv",
+    "timestamp": "2026-10-01T03:22:06.538Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muozf1de_1vcmhe",
+    "timestamp": "2026-10-01T03:35:56.594Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muoznjhc_rwe84g",
+    "timestamp": "2026-10-01T03:42:33.312Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muozqwxn_c48x9t",
+    "timestamp": "2026-10-01T03:45:10.715Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muozu19w_1f598x",
+    "timestamp": "2026-10-01T03:47:36.308Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muozwjrl_8gt5td",
+    "timestamp": "2026-10-01T03:49:33.585Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_mup1s9py_agd3fn",
+    "timestamp": "2026-10-01T04:42:13.174Z",
+    "action": "mention_response",
+    "user": "elf.yun",
+    "server": "Helpper",
+    "channel": "✅│𝗩𝗘𝗥𝗜𝗙𝗬"
+  },
+  {
+    "id": "log_mup2b6vg_5ty25e",
+    "timestamp": "2026-10-01T04:56:55.948Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_mup2glwx_9zdu17",
+    "timestamp": "2026-10-01T05:01:08.721Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_musrhwtp_y57kt6",
+    "timestamp": "2026-10-03T19:05:18.445Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_mussdtjj_2p0gnd",
+    "timestamp": "2026-10-03T19:30:07.183Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_mussezkm_uo5le0",
+    "timestamp": "2026-10-03T19:31:01.654Z",
+    "action": "member_muted",
+    "user": "k1oo_o",
+    "server": "𝗧𝗘𝗠𝗣𝗘𝗥𝗘𝗗",
+    "moderator": "elf.yun",
+    "duration": "1 minutos",
+    "reason": "holi te amo esto es una prueba dali"
+  },
+  {
+    "id": "log_musspb3j_ylv06l",
+    "timestamp": "2026-10-03T19:39:03.151Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muvr0yvj_wuj1xf",
+    "timestamp": "2026-10-05T21:15:26.479Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muvs10he_j4y77n",
+    "timestamp": "2026-10-05T21:43:28.178Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw01iit_0210d7",
+    "timestamp": "2026-10-06T01:27:48.485Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw0i12g_sbchw6",
+    "timestamp": "2026-10-06T01:40:39.016Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw0qv2n_wy6vgm",
+    "timestamp": "2026-10-06T01:47:31.151Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw0tnpx_0sfyfx",
+    "timestamp": "2026-10-06T01:49:41.589Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw13ire_jb5wfn",
+    "timestamp": "2026-10-06T01:57:21.722Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw17tz7_yipirm",
+    "timestamp": "2026-10-06T02:00:42.883Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw1fbu5_rjwon5",
+    "timestamp": "2026-10-06T02:06:32.621Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw1u0yg_fqija1",
+    "timestamp": "2026-10-06T02:17:58.360Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw24ng9_62fq2r",
+    "timestamp": "2026-10-06T02:26:14.073Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw2fdr4_60v15w",
+    "timestamp": "2026-10-06T02:34:34.720Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
+  },
+  {
+    "id": "log_muw2ro0q_z8lcwc",
+    "timestamp": "2026-10-06T02:44:07.898Z",
+    "action": "bot_online",
+    "user": "𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱#0322"
   }
 ]

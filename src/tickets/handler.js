@@ -16,10 +16,31 @@ const {
   deleteTicket
 } = require("./close");
 
-const TICKET_EMOJI = "<a:emoji_6:1556779947744436244>";
+const TICKET_EMOJI = "<:SwordLogo:1554981011052302347>";
 const pendingClosures = new Map();
 
 async function handleTicketInteraction(interaction) {
+
+  const staffRoleId = "1556745392274804899";
+  const staffActions = [
+    "ticket_close",
+    "ticket_close_confirm",
+    "ticket_close_cancel",
+    "ticket_transcript",
+    "ticket_reopen",
+    "ticket_delete",
+    "ticket_close_modal"
+  ];
+
+  if (staffActions.includes(interaction.customId)) {
+    if (!interaction.member.roles.cache.has(staffRoleId)) {
+      await interaction.reply({
+        content: `${TICKET_EMOJI} **Solo el Staff puede realizar esta acción / Only Staff can perform this action.**`,
+        ephemeral: true
+      });
+      return true;
+    }
+  }
 
   if (interaction.isModalSubmit()) {
 
@@ -62,6 +83,7 @@ async function handleTicketInteraction(interaction) {
         .trim();
 
       try {
+        await interaction.deferReply({ ephemeral: true });
         const result = await createTicket(interaction, "appeal");
 
         if (result.existing) {
@@ -103,9 +125,8 @@ async function handleTicketInteraction(interaction) {
           ]
         });
 
-        await interaction.reply({
-          content: `${TICKET_EMOJI} **Tu Appeal ha sido creado / Your Appeal has been created:** ${result.channel}`,
-          ephemeral: true
+        await interaction.editReply({
+          content: `${TICKET_EMOJI} **Tu Appeal ha sido creado / Your Appeal has been created:** ${result.channel}`
         });
 
         return true;
@@ -165,6 +186,7 @@ async function handleTicketInteraction(interaction) {
 
     pendingClosures.delete(interaction.channel.id);
 
+    await interaction.message.delete();
     await closeTicket(interaction, title);
     return true;
   }
