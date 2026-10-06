@@ -45,6 +45,7 @@ function buildAppealPanel() {
 function buildGeneralPanel() {
   const embed = new EmbedBuilder()
     .setColor(0x5C0000)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
     .setDescription(`# <:emoji_5:1555287527965859880> Soporte General
 🇪🇸 **¿Tienes alguna pregunta, consulta o necesitas ayuda con algo relacionado con Tempered?** 
 En este canal puedes **crear tu ticket y contactar con nuestro equipo de soporte** para resolver dudas, realizar consultas, reclamar roles o recompensas, solicitar asistencia con diferentes situaciones y presentar solicitudes que no correspondan a ninguna de las demás categorías disponibles. Nuestro staff revisará tu caso y te ayudará de acuerdo con la situación.
@@ -68,6 +69,39 @@ This channel is intended for **general questions, requests, and issues that do n
   };
 }
 
+function buildUserReportPanel() {
+  const embed = new EmbedBuilder()
+    .setColor(0x5C0000)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+    .setDescription(`# <:emoji_3:1555287285803520110> Reporte de Usuario
+🇪🇸 **¿Has encontrado a un usuario que está incumpliendo las reglas o tienes alguna situación que necesita ser revisada por nuestro Staff?**
+En este canal puedes **crear un ticket para reportar a un usuario** y proporcionar toda la información necesaria para que nuestro equipo pueda revisar el caso. Puedes utilizar esta categoría para reportar comportamientos inapropiados, acoso, spam, uso de exploits o cheats, abuso de bugs, comportamiento antideportivo u otras situaciones que consideres que deben ser revisadas por el Staff.
+
+Por favor, proporciona **información clara y precisa sobre el usuario reportado**, explica lo sucedido y, si es posible, incluye **evidencia que pueda ayudar al Staff a revisar el caso**. Los reportes serán revisados por nuestro equipo y se tomarán las medidas correspondientes de acuerdo con la situación.
+
+# <:emoji_3:1555287285803520110> User Report
+🇺🇸 **Have you encountered a user who is breaking the rules or have a situation that needs to be reviewed by our Staff?**
+In this channel, you can **create a ticket to report a user** and provide all the necessary information for our team to review the case. You can use this category to report inappropriate behavior, harassment, spam, exploits or cheats, bug abuse, unsportsmanlike behavior, or any other situation that you believe should be reviewed by the Staff.
+
+Please provide **clear and accurate information about the reported user**, explain what happened, and, if possible, include **evidence that can help our Staff review the case**. Reports will be reviewed by our team, and appropriate action will be taken depending on the situation.`);
+
+  const button = new ButtonBuilder()
+    .setCustomId("ticket_create_user_report")
+    .setLabel("Reportar Usuario / Report User")
+    .setEmoji({ name: "emoji_3", id: "1555287285803520110" })
+    .setStyle(ButtonStyle.Secondary);
+
+  return {
+    embeds: [embed],
+    components: [new ActionRowBuilder().addComponents(button)]
+  };
+}
+
+async function sendUserReportPanel(channel) {
+  const payload = buildUserReportPanel();
+  return channel.send(payload);
+}
+
 function sendAppealPanel(channel) {
   return channel.send(buildAppealPanel());
 }
@@ -79,7 +113,9 @@ async function sendGeneralPanel(channel) {
 module.exports = {
   buildAppealPanel,
   buildGeneralPanel,
+  buildUserReportPanel,
   sendAppealPanel,
   sendGeneralPanel,
+  sendUserReportPanel,
   panelChannelId: config.panelChannelId
 };

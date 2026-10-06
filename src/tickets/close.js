@@ -17,7 +17,7 @@ async function closeTicket(interaction, ticketTitle) {
 
   const ownerId = channel.topic?.replace("ticket-owner:", "");
 
-  const ticketType = channel.name.startsWith("general-") ? "general" : "appeal";
+  const ticketType = channel.name.startsWith("user_report-") ? "user_report" : channel.name.startsWith("general-") ? "general" : "appeal";
   const ticketConfig = config.tickets[ticketType];
 
   await channel.setParent(ticketConfig.closedCategoryId);
@@ -101,7 +101,7 @@ async function reopenTicket(interaction) {
   const channel = interaction.channel;
   const ownerId = channel.topic?.replace("ticket-owner:", "");
 
-  const ticketType = channel.name.startsWith("general-") ? "general" : "appeal";
+  const ticketType = channel.name.startsWith("user_report-") ? "user_report" : channel.name.startsWith("general-") ? "general" : "appeal";
   const ticketConfig = config.tickets[ticketType];
 
   await channel.setParent(ticketConfig.channelCategoryId);

@@ -5,7 +5,7 @@ const path = require("path");
 
 const { Client, GatewayIntentBits, Events, SlashCommandBuilder, PermissionFlagsBits, MessageFlags, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const { handleTicketInteraction } = require("./tickets/handler");
-const { sendAppealPanel, sendGeneralPanel } = require("./tickets/panel");
+const { sendAppealPanel, sendGeneralPanel, sendUserReportPanel } = require("./tickets/panel");
 
 const client = new Client({
   intents: [
@@ -725,6 +725,13 @@ client.once(Events.ClientReady, async bot => {
     } catch (error) {
       console.error("Error enviando el panel de General Support:", error);
     }
+
+    try {
+      const userReportChannel = await bot.channels.fetch("1556750013558816920");
+      await sendUserReportPanel(userReportChannel);
+    } catch (error) {
+      console.error("Error enviando el panel de User Report:", error);
+    }
   } catch (error) {
     console.error("Error enviando el panel de información:", error);
   }
@@ -1442,7 +1449,7 @@ client.on(
       return;
     }
 
-    if ((interaction.isButton() && ["ticket_create_appeal", "ticket_create_general", "ticket_close", "ticket_close_confirm", "ticket_close_cancel", "ticket_transcript", "ticket_reopen", "ticket_delete"].includes(interaction.customId)) || (interaction.isModalSubmit() && ["ticket_appeal_modal", "ticket_general_modal", "ticket_close_modal"].includes(interaction.customId))) {
+    if ((interaction.isButton() && ["ticket_create_appeal", "ticket_create_general", "ticket_create_user_report", "ticket_close", "ticket_close_confirm", "ticket_close_cancel", "ticket_transcript", "ticket_reopen", "ticket_delete"].includes(interaction.customId)) || (interaction.isModalSubmit() && ["ticket_appeal_modal", "ticket_general_modal", "ticket_user_report_modal", "ticket_close_modal"].includes(interaction.customId))) {
       await handleTicketInteraction(interaction);
       return;
     }

@@ -19,6 +19,15 @@ module.exports = {
         "1556745635347308656",
         "1556745510180626552"
       ]
+    },
+    user_report: {
+      name: "User Report / Reporte de Usuario",
+      channelCategoryId: "1556753599579815987",
+      closedCategoryId: "1556760202718744577",
+      staffRoleIds: [
+        "1556745635347308656",
+        "1556745510180626552"
+      ]
     }
   }
 };
