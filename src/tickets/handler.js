@@ -77,14 +77,14 @@ async function handleTicketInteraction(interaction) {
       return true;
     }
 
-if (interaction.customId === "ticket_appeal_modal" || interaction.customId === "ticket_general_modal" || interaction.customId === "ticket_user_report_modal" || interaction.customId === "ticket_technical_support_modal" || interaction.customId === "ticket_bug_report_modal") {
+if (interaction.customId === "ticket_appeal_modal" || interaction.customId === "ticket_general_modal" || interaction.customId === "ticket_user_report_modal" || interaction.customId === "ticket_technical_support_modal" || interaction.customId === "ticket_bug_report_modal" || interaction.customId === "ticket_staff_application_modal") {
       const answer = interaction.fields
         .getTextInputValue("appeal_reason")
         .trim();
 
       try {
         await interaction.deferReply({ ephemeral: true });
-const result = await createTicket(interaction, interaction.customId === "ticket_general_modal" ? "general" : interaction.customId === "ticket_user_report_modal" ? "user_report" : interaction.customId === "ticket_technical_support_modal" ? "technical_support" : interaction.customId === "ticket_bug_report_modal" ? "bug_report" : "appeal");
+const result = await createTicket(interaction, interaction.customId === "ticket_general_modal" ? "general" : interaction.customId === "ticket_user_report_modal" ? "user_report" : interaction.customId === "ticket_technical_support_modal" ? "technical_support" : interaction.customId === "ticket_bug_report_modal" ? "bug_report" : interaction.customId === "ticket_staff_application_modal" ? "staff_application" : "appeal");
 
         if (result.existing) {
           await interaction.reply({
@@ -218,11 +218,12 @@ content: `${TICKET_EMOJI} **${interaction.customId === "ticket_general_modal" ? 
     return true;
   }
 
-  if (interaction.customId === "ticket_create_appeal" || interaction.customId === "ticket_create_general" || interaction.customId === "ticket_create_user_report" || interaction.customId === "ticket_create_technical_support" || interaction.customId === "ticket_create_bug_report") {
+  if (interaction.customId === "ticket_create_appeal" || interaction.customId === "ticket_create_general" || interaction.customId === "ticket_create_user_report" || interaction.customId === "ticket_create_technical_support" || interaction.customId === "ticket_create_bug_report" || interaction.customId === "ticket_create_staff_application") {
     const isGeneral = interaction.customId === "ticket_create_general";
     const isUserReport = interaction.customId === "ticket_create_user_report";
     const isTechnicalSupport = interaction.customId === "ticket_create_technical_support";
     const isBugReport = interaction.customId === "ticket_create_bug_report";
+    const isStaffApplication = interaction.customId === "ticket_create_staff_application";
 
     const modal = new ModalBuilder()
       .setCustomId(
@@ -230,7 +231,9 @@ content: `${TICKET_EMOJI} **${interaction.customId === "ticket_general_modal" ? 
           ? "ticket_technical_support_modal"
           : isBugReport
             ? "ticket_bug_report_modal"
-            : isUserReport
+            : isStaffApplication
+              ? "ticket_staff_application_modal"
+              : isUserReport
             ? "ticket_user_report_modal"
             : isGeneral
               ? "ticket_general_modal"
@@ -241,7 +244,9 @@ content: `${TICKET_EMOJI} **${interaction.customId === "ticket_general_modal" ? 
           ? "Technical Support / Soporte Técnico"
           : isBugReport
             ? "Bug Report / Reporte de Bugs"
-            : isUserReport
+            : isStaffApplication
+              ? "Staff Application / Aplicación para Staff"
+              : isUserReport
             ? "User Report / Reporte de Usuario"
             : isGeneral
               ? "General Support / Soporte General"

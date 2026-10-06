@@ -38,6 +38,15 @@ module.exports = {
         "1556745510180626552"
       ]
     },
+    staff_application: {
+      name: "Staff Application / Aplicación para Staff",
+      channelCategoryId: "1556907114465726567",
+      closedCategoryId: "1556760202718744577",
+      staffRoleIds: [
+        "1556757166139117708",
+        "1556745561611436242"
+      ]
+    },
     technical_support: {
       name: "Technical Support / Soporte Técnico",
       channelCategoryId: "1556753791225954355",

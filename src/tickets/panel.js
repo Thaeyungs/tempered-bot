@@ -124,6 +124,50 @@ Reports will be reviewed by our team and, when necessary, forwarded to the appro
   };
 }
 
+function buildStaffApplicationPanel() {
+  const embed = new EmbedBuilder()
+    .setColor(0x5C0000)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+    .setDescription(`# <:emoji_7:1556905325246808074> Aplicación para Staff
+🇪🇸 **¿Te gustaría formar parte del Staff de Tempered?**
+En este canal puedes **crear tu ticket y presentar tu aplicación para formar parte de nuestro equipo**, explicando tus experiencias, habilidades, disponibilidad y qué podrías aportar a la comunidad. Nuestro equipo revisará tu aplicación cuidadosamente y evaluará si tu perfil es adecuado para el puesto al que deseas aplicar.
+
+Al completar tu aplicación, procura **destacar aquello que realmente puede diferenciarte como candidato**. No es necesario mencionar como habilidades especiales cualidades básicas que esperamos de cualquier miembro del Staff, como saber comunicarse, respetar a los demás, trabajar en equipo o conectar con la comunidad.
+
+En su lugar, recomendamos resaltar **habilidades de liderazgo, experiencia y conocimientos especializados** que puedan aportar un valor adicional a Tempered. Por ejemplo: **diseño digital, desarrollo de software o videojuegos, edición de videos, diseño y administración de servidores de Discord, programación, automatización, creación de contenido**, entre otras habilidades que puedas demostrar y que consideres relevantes para el equipo.
+
+> **Recuerda:** no necesitas tener una gran cantidad de habilidades para destacar. Es mucho más importante explicar con claridad **qué sabes hacer, qué experiencia tienes y cómo puedes utilizar esas habilidades para contribuir al crecimiento de Tempered.**
+
+Este canal es únicamente para **aplicaciones al Staff**. Por favor, no abras un ticket si solo tienes una duda general, necesitas soporte o deseas reportar un problema.
+
+# <:emoji_7:1556905325246808074> Staff Application
+🇺🇸 **Would you like to become part of the Tempered Staff team?**
+In this channel, you can **create a ticket and submit your application to join our team**, explaining your experience, skills, availability, and what you could contribute to the community. Our team will carefully review your application and determine whether your profile is a good fit for the position you are applying for.
+
+When completing your application, try to **highlight what can genuinely set you apart as a candidate**. You do not need to present basic qualities that we expect from every Staff member as special skills, such as knowing how to communicate, respecting others, working as a team, or connecting with the community.
+
+Instead, we recommend highlighting **leadership skills, experience, and specialized knowledge** that can provide additional value to Tempered. For example: **digital design, software or game development, video editing, Discord server design and administration, programming, automation, content creation**, or any other skills you can demonstrate and consider relevant to the team.
+
+> **Remember:** you do not need to have a large number of skills to stand out. What matters most is clearly explaining **what you can do, what experience you have, and how you can use those skills to contribute to Tempered's growth.**
+
+This channel is exclusively for **Staff applications**. Please do not open a ticket if you only have a general question, need support, or want to report an issue.`);
+
+  const button = new ButtonBuilder()
+    .setCustomId("ticket_create_staff_application")
+    .setLabel("Aplicar al Staff / Staff Application")
+    .setEmoji({ name: "emoji_7", id: "1556905325246808074" })
+    .setStyle(ButtonStyle.Secondary);
+
+  return {
+    embeds: [embed],
+    components: [new ActionRowBuilder().addComponents(button)]
+  };
+}
+
+async function sendStaffApplicationPanel(channel) {
+  return syncPanel(channel, buildStaffApplicationPanel());
+}
+
 async function sendBugReportPanel(channel) {
   const payload = buildBugReportPanel();
   return syncPanel(channel, payload);
@@ -217,10 +261,12 @@ module.exports = {
   buildUserReportPanel,
   buildTechnicalSupportPanel,
   buildBugReportPanel,
+  buildStaffApplicationPanel,
   sendAppealPanel,
   sendGeneralPanel,
   sendUserReportPanel,
   sendTechnicalSupportPanel,
   sendBugReportPanel,
+  sendStaffApplicationPanel,
   panelChannelId: config.panelChannelId
 };
