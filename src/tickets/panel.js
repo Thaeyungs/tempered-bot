@@ -69,6 +69,47 @@ This channel is intended for **general questions, requests, and issues that do n
   };
 }
 
+function buildBugReportPanel() {
+  const embed = new EmbedBuilder()
+    .setColor(0x5C0000)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+    .setDescription(`# <:emoji_2:1555287226894520381> Reporte de Bugs
+🇪🇸 **¿Has encontrado un bug o un error dentro de Tempered?**
+En este canal puedes **crear un ticket para reportar errores o problemas del juego** y proporcionar toda la información necesaria para que nuestro equipo pueda investigar el caso.
+
+Esta categoría está destinada a reportar **bugs, errores, fallos de funciones, problemas con mapas, objetos, sistemas, animaciones, rendimiento u otros comportamientos inesperados dentro del juego**.
+
+Por favor, explica claramente **qué ocurrió, cómo ocurrió y qué estabas haciendo cuando encontraste el problema**. Si es posible, incluye capturas, videos u otra evidencia que pueda ayudar a nuestro equipo a reproducir e investigar el bug.
+
+Los reportes serán revisados por nuestro equipo y, cuando sea necesario, serán enviados al equipo correspondiente para su investigación y corrección.
+
+# <:emoji_2:1555287226894520381> Bug Report
+🇺🇸 **Have you found a bug or an issue within Tempered?**
+In this channel, you can **create a ticket to report bugs or game issues** and provide all the information necessary for our team to investigate the case.
+
+This category is intended for reporting **bugs, errors, broken features, issues with maps, items, systems, animations, performance, or other unexpected behavior within the game**.
+
+Please clearly explain **what happened, how it happened, and what you were doing when you encountered the issue**. If possible, include screenshots, videos, or other evidence that can help our team reproduce and investigate the bug.
+
+Reports will be reviewed by our team and, when necessary, forwarded to the appropriate team for further investigation and resolution.`);
+
+  const button = new ButtonBuilder()
+    .setCustomId("ticket_create_bug_report")
+    .setLabel("Reporte de Bugs / Bug Report")
+    .setEmoji({ name: "emoji_2", id: "1555287226894520381" })
+    .setStyle(ButtonStyle.Secondary);
+
+  return {
+    embeds: [embed],
+    components: [new ActionRowBuilder().addComponents(button)]
+  };
+}
+
+async function sendBugReportPanel(channel) {
+  const payload = buildBugReportPanel();
+  return channel.send(payload);
+}
+
 function buildTechnicalSupportPanel() {
   const embed = new EmbedBuilder()
     .setColor(0x5C0000)
@@ -156,9 +197,11 @@ module.exports = {
   buildGeneralPanel,
   buildUserReportPanel,
   buildTechnicalSupportPanel,
+  buildBugReportPanel,
   sendAppealPanel,
   sendGeneralPanel,
   sendUserReportPanel,
   sendTechnicalSupportPanel,
+  sendBugReportPanel,
   panelChannelId: config.panelChannelId
 };
