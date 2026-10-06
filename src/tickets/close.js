@@ -30,8 +30,7 @@ async function closeTicket(interaction, ticketTitle) {
 
   const embed = new EmbedBuilder()
     .setColor(0x5C0000)
-    .setTitle("Ticket Closed")
-    .setDescription(
+        .setDescription(
       "🇪🇸 El ticket ha sido cerrado. Puedes **crear la transcripción, reabrirlo o eliminarlo**.\n\n" +
       "🇺🇸 The ticket has been closed. You can **create the transcript, reopen it or delete it**."
     );

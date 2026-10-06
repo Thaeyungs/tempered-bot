@@ -17,47 +17,114 @@ const {
 } = require("./close");
 
 const TICKET_EMOJI = "<a:emoji_6:1556779947744436244>";
-
 const pendingClosures = new Map();
 
 async function handleTicketInteraction(interaction) {
+
   if (interaction.isModalSubmit()) {
-    if (interaction.customId !== "ticket_close_modal") {
-      return false;
-    }
 
-    const title = interaction.fields.getTextInputValue("ticket_title").trim();
+    if (interaction.customId === "ticket_close_modal") {
+      const title = interaction.fields.getTextInputValue("ticket_title").trim();
 
-    pendingClosures.set(interaction.channel.id, title);
+      pendingClosures.set(interaction.channel.id, title);
 
-    const embed = new EmbedBuilder()
-      .setColor(0x5C0000)
-      .setTitle("Close Ticket")
-      .setDescription(
-        `🇪🇸 **¿Seguro que quieres cerrar este ticket?**\n` +
-        `Título: **${title}**\n\n` +
-        `🇺🇸 **Are you sure you want to close this ticket?**\n` +
-        `Title: **${title}**`
+      const embed = new EmbedBuilder()
+        .setColor(0x5C0000)
+        .setDescription(
+          `🇪🇸 **¿Seguro que quieres cerrar este ticket?**\n` +
+          `Título: ${title}\n\n` +
+          `🇺🇸 **Are you sure you want to close this ticket?**\n` +
+          `Title: ${title}`
+        );
+
+      const row = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId("ticket_close_confirm")
+          .setLabel("Confirm")
+          .setStyle(ButtonStyle.Success),
+        new ButtonBuilder()
+          .setCustomId("ticket_close_cancel")
+          .setLabel("Cancel")
+          .setStyle(ButtonStyle.Secondary)
       );
 
-    const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setCustomId("ticket_close_confirm")
-        .setLabel("Confirm")
-        .setStyle(ButtonStyle.Success),
+      await interaction.reply({
+        embeds: [embed],
+        components: [row]
+      });
 
-      new ButtonBuilder()
-        .setCustomId("ticket_close_cancel")
-        .setLabel("Cancel")
-        .setStyle(ButtonStyle.Secondary)
-    );
+      return true;
+    }
 
-    await interaction.reply({
-      embeds: [embed],
-      components: [row]
-    });
+    if (interaction.customId === "ticket_appeal_modal") {
+      const answer = interaction.fields
+        .getTextInputValue("appeal_reason")
+        .trim();
 
-    return true;
+      try {
+        const result = await createTicket(interaction, "appeal");
+
+        if (result.existing) {
+          await interaction.reply({
+            content: `${TICKET_EMOJI} **Ya tienes un ticket abierto / You already have an open ticket:** ${result.channel}`,
+            ephemeral: true
+          });
+
+          return true;
+        }
+
+        const welcomeEmbed = new EmbedBuilder()
+          .setColor(0x5C0000)
+          .setDescription(
+            `🇪🇸 **El Staff estará contigo en breve. Ten paciencia mientras revisamos tu solicitud.**\n\n` +
+            `🇺🇸 **The Staff will be with you shortly. Please be patient while we review your request.**`
+          );
+
+        const questionEmbed = new EmbedBuilder()
+          .setColor(0x5C0000)
+          .setTitle("¿Por qué quieres abrir ticket? / Why do you want to open a ticket?")
+          .setDescription(answer);
+
+        const closeButton = new ButtonBuilder()
+          .setCustomId("ticket_close")
+          .setLabel("Close Ticket")
+          .setEmoji("🔒")
+          .setStyle(ButtonStyle.Secondary);
+
+        await result.channel.send({
+          content: `${TICKET_EMOJI} ${interaction.user} **Te damos la bienvenida al Tempered Support! / Welcome to Tempered Support!**`,
+          embeds: [welcomeEmbed]
+        });
+
+        await result.channel.send({
+          embeds: [questionEmbed],
+          components: [
+            new ActionRowBuilder().addComponents(closeButton)
+          ]
+        });
+
+        await interaction.reply({
+          content: `${TICKET_EMOJI} **Tu Appeal ha sido creado / Your Appeal has been created:** ${result.channel}`,
+          ephemeral: true
+        });
+
+        return true;
+
+      } catch (error) {
+        console.error("Error creando ticket:", error);
+
+        if (!interaction.replied && !interaction.deferred) {
+          await interaction.reply({
+            content: `${TICKET_EMOJI} **No se pudo crear el ticket / The ticket could not be created.**`,
+            ephemeral: true
+          });
+        }
+
+        return true;
+      }
+    }
+
+    return false;
   }
 
   if (!interaction.isButton()) return false;
@@ -92,6 +159,7 @@ async function handleTicketInteraction(interaction) {
         content: `${TICKET_EMOJI} **No closing request was found / No se encontró la solicitud de cierre.**`,
         ephemeral: true
       });
+
       return true;
     }
 
@@ -128,61 +196,28 @@ async function handleTicketInteraction(interaction) {
     return true;
   }
 
-  if (interaction.customId !== "ticket_create_appeal") {
-    return false;
-  }
+  if (interaction.customId === "ticket_create_appeal") {
+    const modal = new ModalBuilder()
+      .setCustomId("ticket_appeal_modal")
+      .setTitle("Appeal / Desban");
 
-  await interaction.deferReply({ ephemeral: true });
+    const reasonInput = new TextInputBuilder()
+      .setCustomId("appeal_reason")
+      .setLabel("¿Por qué quieres abrir ticket?")
+      .setPlaceholder("Escribe aquí el motivo de tu ticket...")
+      .setStyle(TextInputStyle.Paragraph)
+      .setMaxLength(1000)
+      .setRequired(true);
 
-  try {
-    const result = await createTicket(interaction, "appeal");
+    modal.addComponents(
+      new ActionRowBuilder().addComponents(reasonInput)
+    );
 
-    if (result.existing) {
-      await interaction.editReply({
-        content: `${TICKET_EMOJI} **Ya tienes un ticket abierto / You already have an open ticket:** ${result.channel}`
-      });
-
-      return true;
-    }
-
-    const welcomeEmbed = new EmbedBuilder()
-      .setColor(0x5C0000)
-      .setTitle(`${TICKET_EMOJI} Welcome to Tempered Support`)
-      .setDescription(
-        "🇪🇸 **El Staff estará contigo en breve. Ten algo de paciencia mientras revisamos tu solicitud.**\n\n" +
-        "🇺🇸 **The Staff will be with you shortly. Please be patient while we review your request.**"
-      );
-
-    const closeButton = new ButtonBuilder()
-      .setCustomId("ticket_close")
-      .setLabel("Close Ticket")
-      .setEmoji("🔒")
-      .setStyle(ButtonStyle.Secondary);
-
-    await result.channel.send({
-      content: `${TICKET_EMOJI} ${interaction.user} **Te damos la bienvenida al Tempered Support! / Welcome to Tempered Support!**`,
-      embeds: [welcomeEmbed],
-      components: [
-        new ActionRowBuilder().addComponents(closeButton)
-      ]
-    });
-
-    await interaction.editReply({
-      content: `${TICKET_EMOJI} **Tu Appeal ha sido creado / Your Appeal has been created:** ${result.channel}`
-    });
-
-    return true;
-  } catch (error) {
-    console.error("Error creando ticket:", error);
-
-    await interaction.editReply({
-      content: `${TICKET_EMOJI} **No se pudo crear el ticket / The ticket could not be created.**`
-    });
-
+    await interaction.showModal(modal);
     return true;
   }
+
+  return false;
 }
 
-module.exports = {
-  handleTicketInteraction
-};
+module.exports = { handleTicketInteraction };
