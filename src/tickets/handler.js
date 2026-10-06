@@ -77,14 +77,14 @@ async function handleTicketInteraction(interaction) {
       return true;
     }
 
-    if (interaction.customId === "ticket_appeal_modal") {
+    if (interaction.customId === "ticket_appeal_modal" || interaction.customId === "ticket_general_modal") {
       const answer = interaction.fields
         .getTextInputValue("appeal_reason")
         .trim();
 
       try {
         await interaction.deferReply({ ephemeral: true });
-        const result = await createTicket(interaction, "appeal");
+        const result = await createTicket(interaction, interaction.customId === "ticket_general_modal" ? "general" : "appeal");
 
         if (result.existing) {
           await interaction.reply({
@@ -126,7 +126,7 @@ async function handleTicketInteraction(interaction) {
         });
 
         await interaction.editReply({
-          content: `${TICKET_EMOJI} **Tu Appeal ha sido creado / Your Appeal has been created:** ${result.channel}`
+          content: `${TICKET_EMOJI} **${interaction.customId === "ticket_general_modal" ? "Tu ticket de Soporte General ha sido creado / Your General Support ticket has been created" : "Tu Appeal ha sido creado / Your Appeal has been created"}:** ${result.channel}`
         });
 
         return true;
@@ -218,10 +218,11 @@ async function handleTicketInteraction(interaction) {
     return true;
   }
 
-  if (interaction.customId === "ticket_create_appeal") {
+  if (interaction.customId === "ticket_create_appeal" || interaction.customId === "ticket_create_general") {
+    const isGeneral = interaction.customId === "ticket_create_general";
     const modal = new ModalBuilder()
-      .setCustomId("ticket_appeal_modal")
-      .setTitle("Appeal / Desban");
+      .setCustomId(isGeneral ? "ticket_general_modal" : "ticket_appeal_modal")
+      .setTitle(isGeneral ? "General Support / Soporte General" : "Appeal / Desban");
 
     const reasonInput = new TextInputBuilder()
       .setCustomId("appeal_reason")

@@ -17,7 +17,10 @@ async function closeTicket(interaction, ticketTitle) {
 
   const ownerId = channel.topic?.replace("ticket-owner:", "");
 
-  await channel.setParent(config.tickets.appeal.closedCategoryId);
+  const ticketType = channel.name.startsWith("general-") ? "general" : "appeal";
+  const ticketConfig = config.tickets[ticketType];
+
+  await channel.setParent(ticketConfig.closedCategoryId);
 
   await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
     ViewChannel: false
@@ -98,7 +101,10 @@ async function reopenTicket(interaction) {
   const channel = interaction.channel;
   const ownerId = channel.topic?.replace("ticket-owner:", "");
 
-  await channel.setParent(config.tickets.appeal.channelCategoryId);
+  const ticketType = channel.name.startsWith("general-") ? "general" : "appeal";
+  const ticketConfig = config.tickets[ticketType];
+
+  await channel.setParent(ticketConfig.channelCategoryId);
 
   if (ownerId) {
     await channel.permissionOverwrites.edit(ownerId, {
