@@ -786,6 +786,12 @@ client.once(Events.ClientReady, async bot => {
   } catch (error) {
     console.error("Error enviando el panel de reglas:", error);
   }
+  
+  try {
+    await sendSupportRulesPanel();
+  } catch (error) {
+    console.error("Error enviando el panel de reglas de Support:", error);
+  }
 
   addActivity({
     action: "Bot conectado",
@@ -1481,6 +1487,72 @@ async function sendLanguagePanel() {
   });
 }
 
+const spanishSupportRulesDescription = `<:SwordLogo:1554981011052302347> ・𝐑𝐄𝐆𝐋𝐀𝐒 𝐃𝐄𝐋 𝐒𝐄𝐑𝐕𝐈𝐃𝐎𝐑 𝐃𝐄 𝐒𝐔𝐏𝐏𝐎𝐑𝐓
+¡𝗕𝗶𝗲𝗻𝘃𝗲𝗻𝗶𝗱𝗼 𝗮𝗹 𝗦𝘂𝗽𝗽𝗼𝗿𝘁 𝗱𝗲 𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱!
+Este servidor está dedicado exclusivamente a ayudarte con tus dudas, reportes y solicitudes. Crea un ticket y nuestro equipo estará listo para ayudarte.
+
+𝟭. 𝗦𝗲́ 𝗿𝗲𝘀𝗽𝗲𝘁𝘂𝗼𝘀𝗼.
+─ Trata con respeto al Staff y a los demás miembros durante todo el proceso de soporte.
+
+𝟮. 𝗣𝗿𝗼𝗽𝗼𝗿𝗰𝗶𝗼𝗻𝗮 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝗰𝗶𝗼́𝗻 𝗰𝗹𝗮𝗿𝗮 𝘆 𝘃𝗲𝗿𝗱𝗮𝗱𝗲𝗿𝗮.
+─ Explica correctamente tu situación y proporciona la información necesaria para que el Staff pueda ayudarte.
+
+𝟯. 𝗠𝗮𝗻𝘁𝗲́𝗻 𝗲𝗹 𝘁𝗶𝗰𝗸𝗲𝘁 𝗿𝗲𝗹𝗮𝗰𝗶𝗼𝗻𝗮𝗱𝗼 𝗰𝗼𝗻 𝘀𝘂 𝗽𝗿𝗼𝗽𝗼́𝘀𝗶𝘁𝗼.
+─ Utiliza el ticket únicamente para el asunto por el que fue creado.
+
+𝟰. 𝗦𝗶𝗴𝘂𝗲 𝗹𝗮𝘀 𝗶𝗻𝗱𝗶𝗰𝗮𝗰𝗶𝗼𝗻𝗲𝘀 𝗱𝗲𝗹 𝗦𝘁𝗮𝗳𝗳.
+─ Coopera con el equipo encargado de resolver tu solicitud.
+
+𝟱. 𝗡𝗼 𝗮𝗯𝘂𝘀𝗲𝘀 𝗱𝗲𝗹 𝘀𝗶𝘀𝘁𝗲𝗺𝗮 𝗱𝗲 𝘀𝗼𝗽𝗼𝗿𝘁𝗲.
+─ No utilices los tickets para molestar, trolear o generar solicitudes falsas.
+
+> ⚠️ **Consecuencias:** El incumplimiento de estas reglas o el uso inapropiado del sistema de soporte puede resultar en medidas disciplinarias, incluyendo restricciones en el acceso a los servicios de soporte, sanciones dentro de la comunidad o cualquier otra medida que el Staff considere necesaria según la gravedad de la situación.`;
+
+async function sendSupportRulesPanel() {
+  const channel = await client.channels.fetch("1555082430740959363");
+
+  if (!channel || !channel.isTextBased()) {
+    throw new Error("No se pudo encontrar el canal de reglas de Support.");
+  }
+
+  const embed = new EmbedBuilder()
+    .setColor(0x5C0000)
+    .setDescription(`<:SwordLogo:1554981011052302347> ・𝐒𝐔𝐏𝐏𝐎𝐑𝐓 𝐒𝐄𝐑𝐕𝐄𝐑 𝐑𝐔𝐋𝐄𝐒
+𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 𝗧𝗲𝗺𝗽𝗲𝗿𝗲𝗱 𝗦𝘂𝗽𝗽𝗼𝗿𝘁!
+This server is dedicated exclusively to helping you with your questions, reports, and requests. Create a ticket and our team will be ready to assist you.
+
+𝟭. 𝗕𝗲 𝗿𝗲𝘀𝗽𝗲𝗰𝘁𝗳𝘂𝗹.
+─ Treat Staff and other members with respect throughout the support process.
+
+𝟮. 𝗣𝗿𝗼𝘃𝗶𝗱𝗲 𝗰𝗹𝗲𝗮𝗿 𝗮𝗻𝗱 𝘁𝗿𝘂𝘁𝗵𝗳𝘂𝗹 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻.
+─ Properly explain your situation and provide the information necessary for Staff to assist you.
+
+𝟯. 𝗞𝗲𝗲𝗽 𝘁𝗵𝗲 𝘁𝗶𝗰𝗸𝗲𝘁 𝗿𝗲𝗹𝗲𝘃𝗮𝗻𝘁 𝘁𝗼 𝗶𝘁𝘀 𝗽𝘂𝗿𝗽𝗼𝘀𝗲.
+─ Use the ticket only for the matter it was created for.
+
+𝟰. 𝗙𝗼𝗹𝗹𝗼𝘄 𝗦𝘁𝗮𝗳𝗳 𝗶𝗻𝘀𝘁𝗿𝘂𝗰𝘁𝗶𝗼𝗻𝘀.
+─ Cooperate with the team handling your request.
+
+𝟱. 𝗗𝗼 𝗻𝗼𝘁 𝗮𝗯𝘂𝘀𝗲 𝘁𝗵𝗲 𝘀𝘂𝗽𝗽𝗼𝗿𝘁 𝘀𝘆𝘀𝘁𝗲𝗺.
+─ Do not use tickets to harass, troll, or create false requests.
+
+> ⚠️ **Consequences:** Failure to follow these rules or misuse of the support system may result in disciplinary action, including restrictions on access to support services, community sanctions, or any other action Staff considers necessary depending on the severity of the situation.`)
+    .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+    .setFooter({ text: "Don't forget common sense!" });
+
+  const button = new ButtonBuilder()
+    .setCustomId("translate_support_rules_es")
+    .setLabel("Traducir al español")
+    .setStyle(ButtonStyle.Secondary);
+
+  await syncPanel(channel, {
+    embeds: [embed],
+    components: [new ActionRowBuilder().addComponents(button)]
+  });
+
+  console.log("SYNC SUPPORT RULES OK");
+}
+
 client.on(
   Events.InteractionCreate,
   async interaction => {
@@ -1492,6 +1564,20 @@ client.on(
       await handleTicketInteraction(interaction);
       return;
     }
+    if (interaction.isButton() && interaction.customId === "translate_support_rules_es") {
+      const embed = new EmbedBuilder()
+        .setColor(0x5C0000)
+        .setDescription(spanishSupportRulesDescription)
+        .setImage("https://cdn.discordapp.com/attachments/1552388946065883198/1555059879570444389/20260930_232635259_1.gif?backend=b2&ex=6abf25de&is=6abdd45e&hm=c6a59dbb709163bee812b01c2ef1550291e5d673f8ae52329a49320122bf1")
+        .setFooter({ text: "¡No olvides el sentido común!" });
+
+      await interaction.reply({
+        embeds: [embed],
+        ephemeral: true
+      });
+      return;
+    }
+
     if (interaction.isButton() && interaction.customId === "translate_rules_es") {
       const embed = new EmbedBuilder()
         .setColor(0x5C0000)
