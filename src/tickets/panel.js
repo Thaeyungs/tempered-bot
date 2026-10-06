@@ -45,22 +45,16 @@ function buildAppealPanel() {
 function buildGeneralPanel() {
   const embed = new EmbedBuilder()
     .setColor(0x5C0000)
-    .setImage(APPEAL_GIF)
-    .setDescription(
-      [
-        "# <:emoji_5:1555287527965859880> Soporte General",
-        "",
-        "🇪🇸 **¿Tienes alguna pregunta, consulta o necesitas ayuda con algo relacionado con Tempered?** En este canal puedes **crear tu ticket y contactar con nuestro equipo de soporte** para resolver dudas, realizar consultas, reclamar roles o recompensas, solicitar asistencia con diferentes situaciones y presentar solicitudes que no correspondan a ninguna de las demás categorías disponibles. Nuestro staff revisará tu caso y te ayudará de acuerdo con la situación.",
-        "",
-        "Este canal está destinado a **consultas generales, solicitudes y problemas que no encajen en las categorías específicas**. Por favor, intenta utilizar la categoría correspondiente cuando tu solicitud esté relacionada con un tema específico, para que podamos ayudarte de la manera más rápida y eficiente posible.",
-        "",
-        "# <:emoji_5:1555287527965859880> General Support",
-        "",
-        "🇺🇸 **Do you have a question, need assistance, or have an issue related to Tempered?** In this channel, you can **create a ticket and contact our support team** for questions, general inquiries, role or reward claims, assistance with different situations, and requests that do not fit into any of the other available categories. Our staff will review your case and assist you accordingly.",
-        "",
-        "This channel is intended for **general questions, requests, and issues that do not fit into a specific category**. Please use the appropriate category whenever your request is related to a specific topic, so our team can assist you as quickly and efficiently as possible."
-      ].join("\n")
-    );
+    .setDescription(`# <:emoji_5:1555287527965859880> Soporte General
+🇪🇸 **¿Tienes alguna pregunta, consulta o necesitas ayuda con algo relacionado con Tempered?** 
+En este canal puedes **crear tu ticket y contactar con nuestro equipo de soporte** para resolver dudas, realizar consultas, reclamar roles o recompensas, solicitar asistencia con diferentes situaciones y presentar solicitudes que no correspondan a ninguna de las demás categorías disponibles. Nuestro staff revisará tu caso y te ayudará de acuerdo con la situación.
+
+Este canal está destinado a **consultas generales, solicitudes y problemas que no encajen en las categorías específicas**. Por favor, intenta utilizar la categoría correspondiente cuando tu solicitud esté relacionada con un tema específico, para que podamos ayudarte de la manera más rápida y eficiente posible.
+# <:emoji_5:1555287527965859880> General Support
+🇺🇸 **Do you have a question, need assistance, or have an issue related to Tempered?** 
+In this channel, you can **create a ticket and contact our support team** for questions, general inquiries, role or reward claims, assistance with different situations, and requests that do not fit into any of the other available categories. Our staff will review your case and assist you accordingly.
+
+This channel is intended for **general questions, requests, and issues that do not fit into a specific category**. Please use the appropriate category whenever your request is related to a specific topic, so our team can assist you as quickly and efficiently as possible.`);
 
   const button = new ButtonBuilder()
     .setCustomId("ticket_create_general")
@@ -74,7 +68,7 @@ function buildGeneralPanel() {
   };
 }
 
-async function sendAppealPanel(channel) {
+function sendAppealPanel(channel) {
   return channel.send(buildAppealPanel());
 }
 
