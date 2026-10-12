@@ -1873,6 +1873,7 @@ setInterval(
 
 client.on(Events.MessageDelete, async message => {
   const logChannels = readJson(path.join(dataDir, "log_channels.json"), {});
+  addLog({ action: "message_deleted", type: "moderation", user: message.author?.tag || "Usuario desconocido", details: { guildId: message.guild.id, channelId: message.channelId, messageId: message.id, authorId: message.author?.id || null, content: message.content || "Sin contenido disponible" } });
   const channelId = logChannels[message.guild?.id]?.general;
   if (!channelId) return;
 
@@ -1917,8 +1918,6 @@ client.on(Events.MessageDelete, async message => {
     )
     .setTimestamp();
 
-  addLog({ action: "message_deleted", type: "moderation", user: message.author?.tag || "Usuario desconocido", details: { guildId: message.guild.id, channelId: message.channelId, messageId: message.id, authorId: message.author?.id || null, deletedById, content: message.content || "Sin contenido disponible" } });
-
   await logChannel.send({ embeds: [embed] });
 });
 
@@ -1927,6 +1926,7 @@ client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
   if (oldMessage.content === newMessage.content) return;
 
   const logChannels = readJson(path.join(dataDir, "log_channels.json"), {});
+  addLog({ action: "message_edited", type: "moderation", user: newMessage.author?.tag || "Usuario desconocido", details: { guildId: newMessage.guild.id, channelId: newMessage.channelId, messageId: newMessage.id, authorId: newMessage.author?.id || null, before: oldMessage.content || "Sin contenido disponible", after: newMessage.content || "Sin contenido disponible" } });
   const channelId = logChannels[newMessage.guild?.id]?.general;
   if (!channelId) return;
 
@@ -1944,8 +1944,6 @@ client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
       { name: "Después", value: newMessage.content || "Sin contenido disponible", inline: false }
     )
     .setTimestamp();
-
-  addLog({ action: "message_edited", type: "moderation", user: newMessage.author?.tag || "Usuario desconocido", details: { guildId: newMessage.guild.id, channelId: newMessage.channelId, messageId: newMessage.id, authorId: newMessage.author?.id || null, before: oldMessage.content || "Sin contenido disponible", after: newMessage.content || "Sin contenido disponible" } });
 
   await logChannel.send({ embeds: [embed] });
 });
