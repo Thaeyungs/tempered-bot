@@ -3,7 +3,7 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
-const { Client, GatewayIntentBits, Events, SlashCommandBuilder, PermissionFlagsBits, MessageFlags, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { Client, GatewayIntentBits, Events, AuditLogEvent, SlashCommandBuilder, PermissionFlagsBits, MessageFlags, EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const { handleTicketInteraction } = require("./tickets/handler");
 const { sendAppealPanel, sendGeneralPanel, sendUserReportPanel, sendTechnicalSupportPanel, sendBugReportPanel, sendStaffApplicationPanel } = require("./tickets/panel");
 
@@ -826,7 +826,7 @@ client.on(Events.InteractionCreate, async interaction => {
     logChannels[guildId].general = interaction.channelId;
   }
 
-  if (subcommand === "seguridad") {
+  if (subcommand === "moderation") {
     logChannels[guildId].seguridad = interaction.channelId;
   }
 
